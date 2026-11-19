@@ -329,7 +329,6 @@
 .site-nav__dropdown {
   padding: 0 0 var(--space-3) var(--space-4);
   margin-left: var(--space-2);
-  border-left: 2px solid var(--color-accent);
 }
 
 .site-nav__dropdown:not([hidden]) {
