@@ -1,0 +1,113 @@
+:root {
+  /* Brand */
+  --color-primary: #00235A;
+  --color-accent: #E45204;
+
+  /* Brand — functional shades (derived, never replace the brand colors) */
+  --color-primary-900: #001433;   /* deepest overlay / pressed state */
+  --color-primary-700: #0A3373;   /* hover on primary surfaces */
+  --color-primary-50: #EEF2F8;    /* tinted surface, icon backgrounds */
+  --color-accent-700: #C24503;    /* orange for text and button fills on light grounds (AA on white: 5.1:1) */
+  --color-accent-800: #A33A02;    /* hover/pressed on accent-700 (6.6:1) */
+  --color-accent-on-dark: #F06A1E; /* orange text on navy (AA: 4.9:1), close to the logo orange */
+  --color-accent-50: #FDF1EA;     /* tinted accent surface */
+
+  /* Neutrals */
+  --color-white: #FFFFFF;
+  --color-black: #111111;
+  --color-gray-50: #F4F5F7;
+  --color-gray-100: #ECEEF2;
+  --color-gray-200: #E5E7EB;
+  --color-gray-500: #6B7280;
+  --color-gray-700: #374151;
+
+  /* Semantic text */
+  --color-text: var(--color-black);
+  --color-text-strong: var(--color-primary);
+  --color-text-muted: #001f4a;    /* 7.6:1 on white — secondary copy */
+  --color-text-subtle: var(--color-gray-500); /* meta only, never key info */
+  --color-text-on-dark: var(--color-white);
+  --color-text-on-dark-muted: rgb(255 255 255 / 0.78);
+  --color-border: var(--color-gray-200);
+  --color-border-on-dark: rgb(255 255 255 / 0.16);
+
+  /* Feedback (used sparingly: forms & notifications only) */
+  --color-success: #1F7A4D;
+  --color-success-50: #EAF6EF;
+  --color-error: #B42318;
+  --color-error-50: #FDECEA;
+
+  /* Typography */
+  /* TODO: VALIDATION MÉTIER — "Futura" ici est un fallback système (aucun
+     fichier Futura PT licencié disponible). Remplacer par un @font-face
+     dès qu'une licence Futura PT légitime (paratype.com) est obtenue. */
+  --font-body: "Futura", "Century Gothic", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --font-heading: "SciFly", sans-serif;
+  --font-menu: "SciFly", sans-serif;
+
+  /* Type scale (mobile → desktop through clamp) */
+  --text-xs: 0.75rem;                                   /* 12 — badges */
+  --text-sm: 0.875rem;                                  /* 14 — meta, labels */
+  --text-base: clamp(0.9375rem, 0.92rem + 0.1vw, 1rem);   /* 15 → 16 */
+  --text-lead: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);    /* 16 → 17 */
+  --text-h4: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);   /* 17 → 19 */
+  --text-h3: clamp(1.25rem, 1.15rem + 0.4vw, 1.5rem);      /* 20 → 24 */
+  --text-h2: clamp(1.625rem, 1.35rem + 1.1vw, 2.25rem);    /* 26 → 36 */
+  --text-h1: clamp(2rem, 1.5rem + 2.2vw, 3.25rem);         /* 32 → 52 */
+  --text-display: clamp(2rem, 1.6rem + 1.6vw, 2.75rem);    /* key figures */
+
+  --leading-tight: 1.05;
+  --leading-heading: 1.15;
+  --leading-body: 1.65;
+  --tracking-label: 0.08em;
+
+  /* Layout */
+  --container-max: 1440px;
+  --container-narrow: 1120px;
+  --measure: 68ch;
+  --header-h: 64px;
+  --section-pad: clamp(3.5rem, 6vw, 5.5rem);
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+
+  /* Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgb(0 0 0 / 0.06);
+  --shadow-md: 0 8px 24px rgb(0 0 0 / 0.10);
+  --shadow-lg: 0 20px 50px rgb(0 0 0 / 0.14);
+  --shadow-header: 0 1px 0 var(--color-border), 0 6px 20px rgb(0 35 90 / 0.06);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --transition-fast: 160ms ease;
+  --transition-base: 280ms ease;
+  --transition-slow: 500ms ease;
+  --transition-emphasis: 420ms var(--ease-out);
+
+  /* Layers */
+  --z-header: 100;
+  --z-nav: 110;
+  --z-floating: 120;
+  --z-progress: 200;
+  --z-modal: 300;
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --header-h: 76px;
+  }
+}

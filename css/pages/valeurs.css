@@ -1,0 +1,1338 @@
+/* Valeurs pages — index, sécurité, valeurs humaines, qualité.
+   Each page carries one idea in motion, tied to its meaning:
+   seals that get stamped (certifications), a shield of priorities (safety),
+   a constellation converging on the collective identity (human values),
+   a loop that never stops (continuous improvement). */
+
+/* Two seals (sécurité page) */
+.commitments__grid--2 {
+  max-width: 760px;
+  margin-inline: auto;
+}
+
+@media (min-width: 900px) {
+  .commitments__grid--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ==========================================================================
+   Pillars (index)
+   ========================================================================== */
+
+.pillars__head {
+  margin-bottom: var(--space-6);
+}
+
+.pillars__grid {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.pillar__link {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+  height: 100%;
+  padding: var(--space-6) var(--space-5);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+  color: inherit;
+  transition: transform var(--transition-emphasis), box-shadow var(--transition-emphasis);
+}
+
+.pillar__link::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition-emphasis);
+}
+
+.pillar__link:hover,
+.pillar__link:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.pillar__link:hover::before,
+.pillar__link:focus-visible::before {
+  transform: none;
+}
+
+.pillar__index {
+  font-family: var(--font-heading);
+  font-size: 2.75rem;
+  line-height: 1;
+  color: var(--color-primary-50);
+  -webkit-text-stroke: 1.5px var(--color-primary);
+  transition: color var(--transition-base);
+}
+
+.pillar__link:hover .pillar__index {
+  color: var(--color-accent-50);
+  -webkit-text-stroke-color: var(--color-accent);
+}
+
+.pillar__title {
+  font-family: var(--font-heading);
+  font-size: var(--text-h3);
+  color: var(--color-primary);
+}
+
+.pillar__text {
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+  line-height: 1.65;
+}
+
+.pillar__more {
+  margin-top: var(--space-2);
+  color: var(--color-accent-700);
+  font-family: var(--font-menu);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.pillar__more span {
+  display: inline-block;
+  transition: transform var(--transition-emphasis);
+}
+
+.pillar__link:hover .pillar__more span {
+  transform: translateX(6px);
+}
+
+@media (min-width: 900px) {
+  .pillars__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.pillar:nth-child(2) { transition-delay: 100ms; }
+.pillar:nth-child(3) { transition-delay: 200ms; }
+
+/* ==========================================================================
+   Safety — the shield of priorities
+   ========================================================================== */
+
+.safety__grid {
+  display: grid;
+  gap: var(--space-7);
+  align-items: start;
+}
+
+.safety__text {
+  max-width: 48ch;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+
+.shield {
+  position: relative;
+  display: grid;
+  gap: var(--space-5);
+}
+
+/* The trait descends along the priorities. */
+.shield::before {
+  content: "";
+  position: absolute;
+  top: 28px;
+  bottom: 28px;
+  left: 27px;
+  width: 2px;
+  background: var(--color-border);
+}
+
+.shield::after {
+  content: "";
+  position: absolute;
+  top: 28px;
+  bottom: 28px;
+  left: 27px;
+  width: 2px;
+  background: var(--color-accent);
+  transform-origin: top;
+}
+
+.shield__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: var(--space-4);
+  align-items: start;
+}
+
+.shield__item:nth-child(2) { --i: 1; }
+.shield__item:nth-child(3) { --i: 2; }
+.shield__item:nth-child(4) { --i: 3; }
+
+.shield__icon {
+  position: relative;
+  z-index: 1;
+  width: 56px;
+  height: 56px;
+  padding: 12px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  fill: none;
+  stroke: var(--color-white);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  box-shadow: 0 0 0 6px var(--color-white);
+  transition: background-color 400ms;
+}
+
+.shield__title {
+  margin-top: var(--space-2);
+  font-family: var(--font-heading);
+  font-size: var(--text-h4);
+  color: var(--color-primary);
+}
+
+.shield__text {
+  margin-top: var(--space-1);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .shield.js-reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .js .shield:not(.is-revealed)::after {
+    transform: scaleY(0);
+  }
+
+  .js .shield:not(.is-revealed) .shield__item {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+
+  .shield.is-revealed::after {
+    transition: transform 1600ms var(--ease-out) 200ms;
+  }
+
+  .shield.is-revealed .shield__item {
+    transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out);
+    transition-delay: calc(200ms + var(--i, 0) * 380ms);
+  }
+
+  .shield.is-revealed .shield__icon {
+    animation: shield-lit 700ms var(--ease-out) calc(450ms + var(--i, 0) * 380ms) both;
+  }
+}
+
+@keyframes shield-lit {
+  0% { background-color: var(--color-primary); }
+  40% { background-color: var(--color-accent); }
+  100% { background-color: var(--color-primary); }
+}
+
+@media (min-width: 1024px) {
+  .safety__grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: var(--space-9);
+  }
+}
+
+/* ==========================================================================
+   Human values — the constellation
+   ========================================================================== */
+
+.human__intro {
+  max-width: 68ch;
+}
+
+.human__text {
+  color: var(--color-text-muted);
+  line-height: 1.75;
+}
+
+.constellation {
+  position: relative;
+  width: min(100%, 600px);
+  aspect-ratio: 1;
+  margin: var(--space-7) auto var(--space-5);
+}
+
+.constellation__lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.constellation__orbit {
+  fill: none;
+  stroke: var(--color-border);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 7;
+}
+
+.constellation__line {
+  stroke: var(--color-accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+.constellation__core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  display: grid;
+  place-content: center;
+  width: 34%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--color-primary);
+  box-shadow: 0 0 0 10px var(--color-primary-50);
+  color: var(--color-white);
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+
+.constellation__core-kicker {
+  font-family: var(--font-menu);
+  font-size: 0.6875rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-accent-on-dark);
+}
+
+.constellation__core-title {
+  margin-top: var(--space-1);
+  font-family: var(--font-heading);
+  font-size: clamp(1rem, 0.85rem + 0.7vw, 1.375rem);
+  line-height: 1.15;
+}
+
+.constellation__value {
+  --a: calc(-90deg + var(--i) * 60deg);
+  position: absolute;
+  top: calc(50% + sin(var(--a)) * 38.33%);
+  left: calc(50% + cos(var(--a)) * 38.33%);
+  z-index: 1;
+  transform: translate(-50%, -50%);
+}
+
+.constellation__value span {
+  display: block;
+  max-width: 17ch;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+  box-shadow: var(--shadow-sm);
+  color: var(--color-primary);
+  font-family: var(--font-heading);
+  font-size: 0.9375rem;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.human__quote {
+  max-width: 52ch;
+  margin-inline: auto;
+  color: var(--color-primary);
+  font-family: var(--font-heading);
+  font-size: var(--text-h4);
+  line-height: 1.4;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .constellation.js-reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .js .constellation:not(.is-revealed) .constellation__line {
+    stroke-dashoffset: 1;
+  }
+
+  .js .constellation:not(.is-revealed) .constellation__value span {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  .js .constellation:not(.is-revealed) .constellation__core {
+    transform: translate(-50%, -50%) scale(0.6);
+    opacity: 0;
+  }
+
+  .constellation.is-revealed .constellation__core {
+    transition: transform 700ms var(--ease-out), opacity 500ms ease;
+  }
+
+  /* Each value is drawn towards the centre: line first, then the value lands. */
+  .constellation.is-revealed .constellation__line {
+    transition: stroke-dashoffset 700ms var(--ease-out) calc(500ms + var(--i) * 260ms);
+  }
+
+  .constellation.is-revealed .constellation__value span {
+    transition: opacity 400ms var(--ease-out), transform 500ms cubic-bezier(0.2, 0.9, 0.3, 1.2);
+    transition-delay: calc(950ms + var(--i) * 260ms);
+  }
+
+  /* Once complete, the core breathes: a living identity. */
+  .constellation.is-revealed .constellation__core {
+    animation: core-breathe 4s ease-in-out 3000ms infinite;
+  }
+}
+
+@keyframes core-breathe {
+  0%, 100% { box-shadow: 0 0 0 10px var(--color-primary-50); }
+  50% { box-shadow: 0 0 0 18px var(--color-accent-50); }
+}
+
+/* Small screens: the circle would be cramped — core on top, values as a grid. */
+@media (max-width: 639px) {
+  .constellation {
+    display: grid;
+    gap: var(--space-4);
+    aspect-ratio: auto;
+  }
+
+  .constellation__lines {
+    display: none;
+  }
+
+  .constellation__core {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 168px;
+    margin-inline: auto;
+    transform: none;
+  }
+
+  .js .constellation:not(.is-revealed) .constellation__core {
+    transform: scale(0.6);
+  }
+
+  .constellation__values {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+  }
+
+  .constellation__value {
+    position: static;
+    transform: none;
+  }
+
+  .constellation__value span {
+    max-width: none;
+    height: 100%;
+  }
+}
+
+/* ----- Culture band ------------------------------------------------------ */
+
+.culture__inner {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-4);
+  text-align: center;
+}
+
+.culture__title {
+  font-family: var(--font-heading);
+  font-size: var(--text-h2);
+  color: var(--color-white);
+}
+
+.culture__text {
+  max-width: 60ch;
+  color: var(--color-text-on-dark-muted);
+  line-height: 1.7;
+}
+
+.culture__words {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3) var(--space-6);
+  margin-top: var(--space-3);
+}
+
+.culture__words li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  font-family: var(--font-heading);
+  font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+  color: var(--color-white);
+}
+
+.culture__words li + li::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+/* ==========================================================================
+   Quality — the continuous improvement loop
+   ========================================================================== */
+
+.quality__grid {
+  display: grid;
+  gap: var(--space-8);
+  align-items: center;
+}
+
+.quality__text {
+  max-width: 56ch;
+  color: var(--color-text-muted);
+  line-height: 1.75;
+}
+
+.quality__text + .quality__text {
+  margin-top: var(--space-4);
+}
+
+.cycle {
+  position: relative;
+  width: min(100%, 520px);
+  aspect-ratio: 1;
+  margin-inline: auto;
+}
+
+.cycle__title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-family: var(--font-menu);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-accent-700);
+}
+
+.cycle__svg {
+  position: absolute;
+  inset: 11.5%;
+  width: 77%;
+  height: 77%;
+  overflow: visible;
+}
+
+.cycle__track {
+  fill: none;
+  stroke: var(--color-border);
+  stroke-width: 2;
+}
+
+.cycle__progress {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  transform: rotate(-90deg);
+  transform-origin: 200px 200px;
+}
+
+.cycle__runner {
+  transform-origin: 200px 200px;
+}
+
+.cycle__runner circle {
+  fill: var(--color-accent);
+  stroke: var(--color-white);
+  stroke-width: 3;
+}
+
+.cycle__arrow {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cycle__core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-content: center;
+  width: 34%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: var(--color-white);
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+
+.cycle__core-kicker {
+  font-family: var(--font-menu);
+  font-size: 0.6875rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-accent-on-dark);
+}
+
+.cycle__core-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1rem, 0.9rem + 0.6vw, 1.375rem);
+}
+
+/* Four commitments at the four points of the loop. */
+.cycle__step {
+  position: absolute;
+  display: grid;
+  gap: 2px;
+  width: 34%;
+  padding: var(--space-3) var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+
+.cycle__step:nth-child(1) { top: 13%; left: 50%; }
+.cycle__step:nth-child(2) { top: 50%; left: 83%; }
+.cycle__step:nth-child(3) { top: 87%; left: 50%; }
+.cycle__step:nth-child(4) { top: 50%; left: 17%; }
+
+.cycle__step-index {
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  color: var(--color-accent-700);
+}
+
+.cycle__step-title {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  color: var(--color-primary);
+}
+
+.cycle__step-text {
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .cycle.js-reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .js .cycle:not(.is-revealed) .cycle__progress {
+    stroke-dashoffset: 1;
+  }
+
+  .js .cycle:not(.is-revealed) .cycle__step,
+  .js .cycle:not(.is-revealed) .cycle__runner {
+    opacity: 0;
+  }
+
+  .cycle.is-revealed .cycle__progress {
+    transition: stroke-dashoffset 1800ms var(--ease-out) 200ms;
+  }
+
+  .cycle.is-revealed .cycle__step {
+    transition: opacity 500ms var(--ease-out) calc(300ms + var(--i) * 400ms);
+  }
+
+  /* The loop never stops: a point travels the cycle and lights each commitment
+     as it passes (top → right → bottom → left, 2 s apart). */
+  .cycle.is-revealed .cycle__runner {
+    transition: opacity 400ms ease 1900ms;
+    animation: cycle-run 8s linear 2000ms infinite;
+  }
+
+  .cycle.is-revealed .cycle__step {
+    animation: cycle-step 8s ease-out calc(2000ms + var(--i) * 2000ms) infinite;
+  }
+}
+
+@keyframes cycle-run {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes cycle-step {
+  0% { border-color: var(--color-accent); box-shadow: 0 0 0 4px var(--color-accent-50), var(--shadow-md); }
+  18%, 100% { border-color: var(--color-border); box-shadow: var(--shadow-sm); }
+}
+
+/* Small screens: loop above, commitments as a list. */
+@media (max-width: 639px) {
+  .cycle {
+    aspect-ratio: auto;
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .cycle__title {
+    position: static;
+  }
+
+  .cycle__svg {
+    position: relative;
+    inset: auto;
+    width: 220px;
+    height: 220px;
+    margin-inline: auto;
+  }
+
+  .cycle__core {
+    top: 140px;
+    width: 96px;
+  }
+
+  .cycle__steps {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .cycle__step {
+    position: static;
+    width: auto;
+    transform: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .quality__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-9);
+  }
+}
+
+/* ==========================================================================
+   Documents — the certificate and the signed QSE policy, laid on the table
+   like two sheets of paper. They slide in and settle at a slight angle;
+   pointing at one straightens and lifts it; click opens it full size
+   (lightbox, js/gallery.js).
+   ========================================================================== */
+
+.documents__inner {
+  display: grid;
+  gap: var(--space-7);
+  align-items: center;
+}
+
+.documents__text {
+  max-width: 46ch;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+
+.documents__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+.document__link {
+  display: grid;
+  gap: var(--space-4);
+  color: inherit;
+  cursor: zoom-in;
+}
+
+.document__paper {
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background: var(--color-white);
+  box-shadow: 0 2px 0 rgb(0 0 0 / 0.04), 0 18px 40px rgb(0 35 90 / 0.18);
+  transform: rotate(var(--tilt, -3deg));
+  transition: transform 600ms var(--ease-out), box-shadow 600ms var(--ease-out);
+}
+
+.document:nth-child(2) {
+  --tilt: 2.5deg;
+  --i: 1;
+}
+
+.document__paper img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.document__link:hover .document__paper,
+.document__link:focus-visible .document__paper {
+  transform: rotate(0deg) translateY(-8px) scale(1.02);
+  box-shadow: 0 2px 0 rgb(0 0 0 / 0.04), 0 30px 60px rgb(0 35 90 / 0.25);
+}
+
+.document__link:focus-visible {
+  outline: none;
+}
+
+.document__link:focus-visible .document__paper {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+.document__meta {
+  display: grid;
+  gap: 2px;
+}
+
+.document__title {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  color: var(--color-primary);
+}
+
+.document__sub {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.document__open {
+  margin-top: var(--space-1);
+  color: var(--color-accent-700);
+  font-family: var(--font-menu);
+  font-size: var(--text-sm);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .documents__grid.js-reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .js .documents__grid:not(.is-revealed) .document__paper {
+    opacity: 0;
+    transform: translateY(60px) rotate(calc(var(--tilt, -3deg) * -3));
+  }
+
+  .documents__grid.is-revealed .document__paper {
+    transition:
+      opacity 500ms var(--ease-out) calc(var(--i, 0) * 220ms),
+      transform 900ms cubic-bezier(0.2, 0.9, 0.3, 1.05) calc(var(--i, 0) * 220ms),
+      box-shadow 600ms var(--ease-out);
+  }
+}
+
+@media (min-width: 1024px) {
+  .documents__inner {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: var(--space-9);
+  }
+
+  .documents__grid {
+    gap: var(--space-7);
+  }
+}
+
+/* Qualité hero: keep the welder's mask and the arc in frame on wide screens. */
+.page-hero--qualite .page-hero__media img {
+  object-position: 50% 12%;
+}
+
+/* ==========================================================================
+   Mobile (≤ 639px) — compact versions that keep each idea.
+   Constellation: small core, an orange stem, the values as light chips.
+   Cycle: a small looping ring with its title beside it, then the four
+   commitments as thin rows; the runner still lights each one in turn.
+   ========================================================================== */
+
+@media (max-width: 639px) {
+  /* ----- Constellation ----- */
+  .constellation {
+    gap: 0;
+    margin-block: var(--space-6) var(--space-4);
+  }
+
+  .constellation__core {
+    width: 104px;
+    box-shadow: 0 0 0 6px var(--color-primary-50);
+  }
+
+  .constellation__core-kicker {
+    font-size: 0.5625rem;
+  }
+
+  .constellation__core-title {
+    font-size: 0.875rem;
+  }
+
+  /* The stem: the values hang from the collective identity. */
+  .constellation__values {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-top: var(--space-5);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .constellation__values::before {
+    content: "";
+    position: absolute;
+    top: calc(var(--space-5) * -1);
+    left: 50%;
+    width: 2px;
+    height: var(--space-5);
+    margin-left: -1px;
+    background: var(--color-accent);
+    transform-origin: top;
+  }
+
+  .constellation__value span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: auto;
+    max-width: none;
+    padding: 6px 12px;
+    border-radius: 999px;
+    box-shadow: none;
+    font-size: 0.8125rem;
+    line-height: 1.3;
+    text-align: left;
+  }
+
+  .constellation__value span::before {
+    content: "";
+    flex-shrink: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-accent);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .js .constellation:not(.is-revealed) .constellation__values::before {
+      transform: scaleY(0);
+    }
+
+    .constellation.is-revealed .constellation__values::before {
+      transition: transform 500ms var(--ease-out) 500ms;
+    }
+
+    .constellation.is-revealed .constellation__value span {
+      transition-delay: calc(800ms + var(--i) * 110ms);
+    }
+  }
+
+  /* ----- Cycle ----- */
+  .cycle {
+    grid-template-columns: 88px 1fr;
+    grid-template-areas:
+      "ring title"
+      "ring core"
+      "steps steps";
+    column-gap: var(--space-4);
+    row-gap: 0;
+    align-items: center;
+  }
+
+  .cycle__title {
+    grid-area: title;
+    align-self: end;
+  }
+
+  .cycle__svg {
+    grid-area: ring;
+    width: 88px;
+    height: 88px;
+    margin: 0;
+  }
+
+  .cycle__core {
+    grid-area: core;
+    position: static;
+    align-self: start;
+    display: block;
+    width: auto;
+    aspect-ratio: auto;
+    border-radius: 0;
+    background: none;
+    color: var(--color-primary);
+    text-align: left;
+    transform: none;
+  }
+
+  .cycle__core-kicker,
+  .cycle__core-title {
+    display: inline;
+    font-family: var(--font-heading);
+    font-size: var(--text-h4);
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--color-primary);
+  }
+
+  .cycle__core-kicker::after {
+    content: " ";
+  }
+
+  .cycle__steps {
+    grid-area: steps;
+    gap: 0;
+    margin-top: var(--space-4);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .cycle__step {
+    grid-template-columns: 28px 1fr;
+    column-gap: var(--space-3);
+    row-gap: 0;
+    padding: var(--space-3) 0;
+    border: 0;
+    border-bottom: 1px solid var(--color-border);
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    text-align: left;
+  }
+
+  .cycle__step-index {
+    grid-row: span 2;
+    align-self: start;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--color-primary-50);
+    color: var(--color-primary);
+    font-size: 0.6875rem;
+  }
+
+  .cycle__step-title {
+    font-size: 0.9375rem;
+  }
+
+  .cycle__step-text {
+    font-size: 0.8125rem;
+  }
+
+  /* The runner lights the number of each commitment instead of a card. */
+  @media (prefers-reduced-motion: no-preference) {
+    .cycle.is-revealed .cycle__step {
+      animation: none;
+    }
+
+    .cycle.is-revealed .cycle__step-index {
+      animation: cycle-step-m 8s ease-out calc(2000ms + var(--i) * 2000ms) infinite;
+    }
+  }
+}
+
+@keyframes cycle-step-m {
+  0% { background: var(--color-accent); color: var(--color-white); box-shadow: 0 0 0 4px var(--color-accent-50); }
+  18%, 100% { background: var(--color-primary-50); color: var(--color-primary); box-shadow: none; }
+}
+
+/* Small ring: thicker strokes so it reads at 88px. */
+@media (max-width: 639px) {
+  .cycle__track { stroke-width: 8; }
+  .cycle__progress { stroke-width: 12; }
+  .cycle__runner circle { r: 20px; stroke-width: 8; }
+  .cycle__arrow { stroke-width: 12; }
+}
+
+/* Commitment marks on the ring — lit by the runner, in step with the list. */
+.cycle__mark {
+  fill: var(--color-white);
+  stroke: var(--color-gray-200);
+  stroke-width: 3;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cycle.is-revealed .cycle__mark {
+    animation: cycle-mark 8s ease-out calc(2000ms + var(--i) * 2000ms) infinite;
+  }
+}
+
+@keyframes cycle-mark {
+  0% { fill: var(--color-accent); stroke: var(--color-accent); transform: scale(1.5); }
+  18%, 100% { fill: var(--color-white); stroke: var(--color-gray-200); transform: none; }
+}
+
+/* Centre of the ring: only on mobile (desktop shows the HTML core there). */
+.cycle__hub {
+  display: none;
+}
+
+@media (max-width: 639px) {
+  .cycle__hub {
+    display: inline;
+  }
+
+  .cycle__hub circle {
+    fill: var(--color-primary);
+  }
+
+  .cycle__hub text {
+    fill: var(--color-white);
+    font-family: var(--font-heading);
+    font-size: 64px;
+    letter-spacing: 0.04em;
+    text-anchor: middle;
+  }
+
+  .cycle__mark {
+    stroke-width: 8;
+    r: 22px;
+  }
+
+  /* Runner above the marks. */
+  .cycle__runner {
+    isolation: isolate;
+  }
+}
+
+@media (max-width: 639px) {
+  .cycle { grid-template-columns: 104px 1fr; }
+  .cycle__svg { width: 104px; height: 104px; }
+}
+
+/* ----- Sécurité: contrôle EPI ----------------------------------------------
+   A control line runs down the photo (head → feet); each equipment pin and
+   chip is ticked when reached. A chosen equipment is spotlit (radial veil
+   at --fx/--fy) and its role is told below (js/pages/securite.js). */
+
+.epi {
+  max-width: 600px;
+  margin: var(--space-6) 0 0;
+}
+
+.epi__frame {
+  --fx: 45%;
+  --fy: 50%;
+  position: relative;
+  aspect-ratio: 2000 / 1379;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  box-shadow: var(--shadow-md);
+}
+
+/* Framed on the agent: the photo is shown from 20 % to 75 % of its width
+   and 22 % to 78 % of its height (pin positions use this crop). */
+.epi__frame img {
+  position: absolute;
+  left: -36.36%;
+  top: -39.29%;
+  width: 181.82%;
+  max-width: none;
+  height: 178.57%;
+  object-fit: cover;
+  transform-origin: 0 0;
+}
+
+.epi__spot {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle 70px at var(--fx) var(--fy), transparent 0 60%, rgb(0 35 90 / 0.72) 100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-base);
+}
+
+.epi.is-focused .epi__spot {
+  opacity: 1;
+}
+
+/* Full-height box parked above the frame; its bottom edge is the line, with
+   a soft trail over what has already been checked. */
+.epi__scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -100%;
+  height: 100%;
+  background: linear-gradient(to top, var(--color-accent) 0 2px, rgb(228 82 4 / 0.22) 2px, transparent 70px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.epi__pin {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 2px solid var(--color-white);
+  border-radius: 50%;
+  background: rgb(0 35 90 / 0.85);
+  color: var(--color-white);
+  font-family: var(--font-menu);
+  font-size: 0.6875rem;
+  line-height: 1;
+  translate: -50% -50%;
+  cursor: pointer;
+  transition: background var(--transition-fast), scale var(--transition-fast);
+}
+
+.epi__pin.is-checked {
+  background: var(--color-accent);
+}
+
+.epi__pin:hover,
+.epi__pin.is-active {
+  scale: 1.2;
+}
+
+.epi__pin.is-active {
+  box-shadow: 0 0 0 4px rgb(228 82 4 / 0.4);
+}
+
+.epi__badge {
+  position: absolute;
+  left: var(--space-4);
+  bottom: var(--space-4);
+  transition: background var(--transition-base);
+}
+
+.epi.is-done .epi__badge {
+  background: var(--color-accent-700);
+}
+
+.epi__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.epi__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 var(--space-4) 0 6px;
+  border: 1px solid var(--color-gray-200);
+  border-radius: 999px;
+  background: var(--color-white);
+  color: var(--color-primary);
+  font-family: var(--font-menu);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: border-color var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
+}
+
+.epi__chip:hover {
+  border-color: var(--color-primary);
+}
+
+.epi__chip.is-active {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.epi__num {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--color-primary-50);
+  color: var(--color-primary);
+  font-size: 0.75rem;
+}
+
+.epi__tick {
+  width: 10px;
+  height: 6px;
+  margin: -3px 0 0 2px;
+  border-left: 2px solid var(--color-accent);
+  border-bottom: 2px solid var(--color-accent);
+  transform: rotate(-45deg) scale(0);
+  transition: transform 300ms var(--ease-out);
+}
+
+.epi__chip.is-checked .epi__tick {
+  transform: rotate(-45deg) scale(1);
+}
+
+.epi__chip.is-active .epi__tick {
+  border-color: var(--color-white);
+}
+
+.epi__info {
+  min-height: 3.2em;
+  margin-top: var(--space-3);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .epi.js-reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Opening shot: the whole site, then the camera closes in on the agent. */
+  .js .epi:not(.is-zoomed) .epi__frame img {
+    transform: translate(20%, 22%) scale(0.55);
+  }
+
+  .epi.is-zoomed .epi__frame img {
+    transition: transform 1100ms cubic-bezier(0.65, 0, 0.35, 1);
+  }
+
+  .js .epi:not(.is-done) .epi__pin:not(.is-checked) {
+    opacity: 0;
+    scale: 0.4;
+  }
+
+  .epi__pin {
+    transition: background var(--transition-fast), scale 300ms var(--ease-out), opacity 200ms ease;
+  }
+
+  .epi.is-scanning .epi__scan {
+    animation: epi-scan 2600ms linear 250ms both;
+  }
+
+  .epi__pin.is-checked {
+    animation: epi-ping 700ms var(--ease-out);
+  }
+}
+
+@keyframes epi-scan {
+  0% { opacity: 1; transform: translateY(0); }
+  95% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(100%); }
+}
+
+@keyframes epi-ping {
+  0% { box-shadow: 0 0 0 0 rgb(228 82 4 / 0.7); }
+  100% { box-shadow: 0 0 0 14px rgb(228 82 4 / 0); }
+}

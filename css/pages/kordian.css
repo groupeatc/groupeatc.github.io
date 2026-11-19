@@ -1,0 +1,564 @@
+/* Fabrication de réservoirs de dépôt pétrolier: "un réservoir, virole après
+   virole" — the tank drawn on a blueprint builds up stage by stage next to
+   the matching real photo (js/pages/kordian.js); the operational bases band.
+   The overview row, datasheet and gallery are shared (projets.css). */
+
+/* ==========================================================================
+   Un réservoir, virole après virole
+   ========================================================================== */
+
+.tank-section {
+  padding-block: clamp(2.5rem, 5vw, 3.5rem);
+  background: var(--color-gray-50);
+}
+
+.tank-section__lead {
+  max-width: 60ch;
+  margin-top: var(--space-3);
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.tank {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+}
+
+/* Plan and photo side by side at every width, kept short. */
+.tank__stage {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  height: clamp(200px, 32vw, 420px);
+}
+
+@media (min-width: 600px) {
+  .tank__stage {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .tank__stage {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+    gap: var(--space-4);
+  }
+}
+
+/* The blueprint: brand blue, fine plan grid. */
+.tank__plan {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+  padding: var(--space-7) var(--space-3) var(--space-3);
+  border-radius: var(--radius-md);
+  background-color: var(--color-primary);
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.06) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.tank__plan svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: visible;
+}
+
+.tank__plan-label {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  color: var(--color-text-on-dark-muted);
+  font-family: var(--font-menu);
+  font-size: 0.625rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+@media (max-width: 599px) {
+  .tank__plan {
+    padding: var(--space-6) var(--space-2) var(--space-2);
+  }
+
+  .tank__plan-label,
+  .tank__hint {
+    display: none;
+  }
+}
+
+.tank__chip {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  background: var(--color-accent-700);
+}
+
+/* 3D blueprint (js/pages/kordian-3d.js): the canvas replaces the SVG plan,
+   its own grid replaces the CSS one. Horizontal drag turns the tank; the
+   page still scrolls vertically on touch screens. */
+.tank__plan.is-3d {
+  background-image: none;
+  background: radial-gradient(120% 90% at 50% 30%, #0a3274 0%, var(--color-primary) 70%);
+}
+
+.tank__plan.is-3d svg {
+  display: none;
+}
+
+.tank__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+.tank__plan.is-dragging .tank__canvas {
+  cursor: grabbing;
+}
+
+.tank__hint {
+  position: absolute;
+  right: var(--space-3);
+  bottom: var(--space-3);
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+
+.tank[data-stage="4"] .tank__plan.is-3d:not(.was-dragged) .tank__hint {
+  opacity: 1;
+  transition-delay: 2.2s;
+}
+
+.tank__chip,
+.tank__hint,
+.tank__plan-label {
+  z-index: 1;
+}
+
+/* Drawing. */
+.tk-line,
+.tk-treads,
+.tk-ring rect,
+.tk-ring path,
+.tk-roof path {
+  fill: none;
+  stroke: rgb(255 255 255 / 0.85);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+
+.tk-line--accent {
+  stroke: var(--color-accent);
+  stroke-width: 2.5;
+}
+
+.tk-ring rect {
+  fill: rgb(255 255 255 / 0.05);
+}
+
+.tk-ring path,
+.tk-roof .tk-truss,
+.tk-treads {
+  stroke: rgb(255 255 255 / 0.45);
+  stroke-width: 1;
+}
+
+.tk-ring text {
+  fill: var(--color-text-on-dark-muted);
+  font-family: var(--font-menu);
+  font-size: 9px;
+}
+
+.tk-roof .tk-cable {
+  stroke: var(--color-accent);
+  stroke-dasharray: 4 3;
+}
+
+.tk-roof .tk-hook {
+  fill: var(--color-accent);
+  stroke: none;
+}
+
+/* Product level: a light fill and the orange level line rising with it. */
+.tk-fill {
+  fill: rgb(255 255 255 / 0.1);
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.tk-level {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 2;
+}
+
+/* The photos, cross-faded. */
+.tank__photos {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  box-shadow: var(--shadow-md);
+}
+
+.tank__photo {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+}
+
+.tank__photo.is-active {
+  opacity: 1;
+}
+
+.tank__photo picture {
+  display: block;
+  height: 100%;
+}
+
+.tank__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tank__photo figcaption {
+  position: absolute;
+  left: var(--space-3);
+  bottom: var(--space-3);
+  max-width: calc(100% - 2 * var(--space-3));
+}
+
+/* The four stages; the orange rail fills up to the current one. */
+.tank__steps {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 768px) {
+  .tank__steps {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+}
+
+.tank__step {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 2px var(--space-2);
+  align-items: baseline;
+  width: 100%;
+  height: 100%;
+  min-height: 44px;
+  padding: var(--space-3) var(--space-3) var(--space-3) var(--space-2);
+  border: 0;
+  border-top: 1px solid var(--color-gray-200);
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.tank__step::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 500ms var(--ease-out);
+}
+
+.tank__step.is-done::before,
+.tank__step[aria-pressed="true"]::before {
+  transform: none;
+}
+
+.tank__step:hover {
+  background: var(--color-white);
+}
+
+.tank__step[aria-pressed="true"] {
+  background: var(--color-white);
+}
+
+.tank__step:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.tank__num {
+  font-family: var(--font-menu);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.tank__step[aria-pressed="true"] .tank__num,
+.tank__step.is-done .tank__num {
+  color: var(--color-accent-700);
+}
+
+.tank__step strong {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  font-size: 1.0625rem;
+  color: var(--color-primary);
+}
+
+.tank__text {
+  grid-column: 2;
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+
+/* --------------------------------------------------------------------------
+   Stages (data-stage set by JS; without JS / reduced motion the whole tank
+   is drawn). An element marked tk-aN appears from stage N.
+   -------------------------------------------------------------------------- */
+
+.tk-line {
+  stroke-dasharray: 1;
+}
+
+.tk-roof .tk-cable,
+.tk-roof .tk-hook {
+  opacity: 0;
+}
+
+.tank__chip {
+  opacity: 1;
+}
+
+.tank[data-stage="0"] .tk-a1,
+.tank[data-stage="0"] .tk-a2,
+.tank[data-stage="1"] .tk-a2,
+.tank[data-stage="0"] .tk-a3,
+.tank[data-stage="1"] .tk-a3,
+.tank[data-stage="2"] .tk-a3,
+.tank[data-stage="0"] .tk-a4,
+.tank[data-stage="1"] .tk-a4,
+.tank[data-stage="2"] .tk-a4,
+.tank[data-stage="3"] .tk-a4 {
+  --hidden: 1;
+}
+
+.tank:not([data-stage="4"]) .tank__chip {
+  opacity: 0;
+}
+
+.tank[data-stage="3"] .tk-cable,
+.tank[data-stage="3"] .tk-hook {
+  opacity: 1;
+}
+
+/* Hidden state per element type. */
+.tank .tk-line {
+  stroke-dashoffset: var(--hidden, 0);
+}
+
+.tank .tk-ring,
+.tank .tk-roof,
+.tank .tk-fill,
+.tank .tk-treads {
+  opacity: calc(1 - var(--hidden, 0));
+}
+
+.tank .tk-ring {
+  transform: translateY(calc(var(--hidden, 0) * -18px));
+}
+
+.tank .tk-roof {
+  transform: translateY(calc(var(--hidden, 0) * -70px));
+}
+
+.tank .tk-fill {
+  transform: scaleY(calc(1 - var(--hidden, 0)));
+}
+
+.tank .tk-level {
+  opacity: calc(1 - var(--hidden, 0));
+  transform: translateY(calc(var(--hidden, 0) * 123px));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tank .tk-line {
+    transition: stroke-dashoffset 900ms var(--ease-out);
+  }
+
+  /* Rings land one by one; going back, they all leave at once. */
+  .tank .tk-ring {
+    transition: opacity 400ms ease, transform 500ms var(--ease-out);
+    transition-delay: calc(var(--i, 0) * 280ms * (1 - var(--hidden, 0)));
+  }
+
+  .tank .tk-roof {
+    transition: opacity 300ms ease, transform 1100ms var(--ease-out);
+  }
+
+  .tank .tk-cable,
+  .tank .tk-hook {
+    transition: opacity 400ms ease;
+  }
+
+  .tank .tk-fill,
+  .tank .tk-level {
+    transition: transform 1400ms var(--ease-out) 400ms, opacity 300ms ease;
+  }
+
+  .tank__chip,
+  .tank .tk-treads {
+    transition: opacity 300ms ease;
+  }
+
+  /* Appearing at the end of the stage drawing; leaving at once. */
+  .tank[data-stage="4"] .tank__chip {
+    transition: opacity 400ms ease 900ms;
+  }
+
+  .tank[data-stage="4"] .tk-treads {
+    transition: opacity 400ms ease 600ms;
+  }
+
+  .tank__photo {
+    transition: opacity 600ms ease;
+  }
+
+  .tank__photo img {
+    transition: transform 6s linear;
+  }
+
+  .tank__photo.is-active img {
+    transform: scale(1.04);
+  }
+}
+
+/* ==========================================================================
+   Bases opérationnelles — compact band
+   ========================================================================== */
+
+.bases {
+  padding-block: clamp(2.5rem, 5vw, 3.5rem);
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.bases__grid {
+  display: grid;
+  gap: var(--space-6);
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .bases__grid {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-8);
+  }
+}
+
+.bases__title {
+  margin-top: var(--space-2);
+  font-family: var(--font-heading);
+  font-size: var(--text-h3);
+  font-weight: 400;
+  line-height: var(--leading-heading);
+}
+
+.bases__text {
+  max-width: 62ch;
+  margin-top: var(--space-3);
+  color: var(--color-text-on-dark-muted);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.bases__fleet {
+  display: grid;
+  margin: var(--space-5) 0 0;
+  border-top: 1px solid rgb(255 255 255 / 0.18);
+}
+
+@media (min-width: 600px) {
+  .bases__fleet {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-5);
+  }
+}
+
+.bases__fleet > div {
+  display: grid;
+  gap: 2px;
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid rgb(255 255 255 / 0.18);
+}
+
+.bases__fleet dt {
+  font-family: var(--font-menu);
+  font-size: 0.75rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-text-on-dark-muted);
+}
+
+.bases__fleet dd {
+  margin: 0;
+  font-size: 0.9375rem;
+}
+
+.bases__fleet strong {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  font-size: 1.25rem;
+  color: var(--color-accent-on-dark);
+  font-variant-numeric: tabular-nums;
+}
+
+.bases__photo {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  height: clamp(220px, 26vw, 360px);
+  border-radius: var(--radius-md);
+}
+
+.bases__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bases__photo figcaption {
+  position: absolute;
+  left: var(--space-3);
+  bottom: var(--space-3);
+}
+
+@media (max-width: 1023px) {
+  .bases__photo {
+    height: min(56vw, 300px);
+  }
+}

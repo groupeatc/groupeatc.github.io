@@ -1,0 +1,2673 @@
+/* Homepage-specific styles. */
+
+/* The homepage is long: a tighter vertical rhythm than inner pages. */
+:root {
+  --section-pad: clamp(2.5rem, 4.5vw, 3.75rem);
+}
+
+/* ==========================================================================
+   Hero
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  min-height: clamp(520px, calc(100svh - var(--header-h) - var(--bar-h, 0px)), 860px);
+  overflow: hidden;
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.hero__stage {
+  position: absolute;
+  inset: 0;
+}
+
+.hero__media,
+.hero__blueprint {
+  position: absolute;
+  top: -12%;
+  bottom: -12%;
+  left: 0;
+  right: 0;
+  will-change: transform;
+}
+
+.hero__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero__sheet {
+  position: absolute;
+  inset: 0;
+  background-color: rgb(0 35 90 / 0.86);
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.08) 1px, transparent 1px),
+    linear-gradient(rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+  background-size: 160px 160px, 160px 160px, 32px 32px, 32px 32px;
+}
+
+.hero__blueprint svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hero__line {
+  fill: none;
+  stroke: rgb(255 255 255 / 0.92);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.hero__line--ground {
+  stroke: rgb(255 255 255 / 0.5);
+  stroke-dasharray: 6 6;
+}
+
+.hero__line--crane {
+  stroke: var(--color-accent);
+  stroke-width: 2.4;
+}
+
+.hero__line--hook {
+  stroke: rgb(255 255 255 / 0.6);
+  stroke-width: 1;
+}
+
+.hero__label circle {
+  fill: var(--color-accent);
+}
+
+.hero__label path {
+  fill: none;
+  stroke: rgb(255 255 255 / 0.75);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.hero__label text {
+  fill: var(--color-white);
+  font-family: var(--font-menu);
+  font-size: 15px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* The plotter trait that sweeps the sheet away (rides its edge). */
+.hero__scan {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.hero__scan::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 3px;
+  background: var(--color-accent);
+  box-shadow: 0 0 22px 4px rgb(228 82 4 / 0.6);
+}
+
+/* After the opening, the plan comes back inside a lens under the pointer. */
+@property --lr { syntax: "<length>"; inherits: true; initial-value: 0px; }
+
+.hero__lens {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: calc(var(--lr) * 2);
+  height: calc(var(--lr) * 2);
+  border: 1.5px solid var(--color-accent);
+  border-radius: 50%;
+  translate: calc(var(--mx-s, -999px) - var(--lr)) calc(var(--my-s, -999px) - var(--lr));
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.hero__lens-chip {
+  position: absolute;
+  left: 50%;
+  bottom: -11px;
+  translate: -50% 0;
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+  background: var(--color-accent-700);
+  color: var(--color-white);
+  font-family: var(--font-menu);
+  font-size: 0.5625rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.hero.is-live .hero__blueprint {
+  -webkit-mask-image: radial-gradient(circle var(--lr) at var(--mx, -999px) var(--my, -999px), #000 calc(100% - 2px), transparent 100%);
+  mask-image: radial-gradient(circle var(--lr) at var(--mx, -999px) var(--my, -999px), #000 calc(100% - 2px), transparent 100%);
+}
+
+.hero.is-aiming {
+  --lr: 80px;
+}
+
+@media (max-width: 1279px) {
+  .hero.is-aiming {
+    --lr: 66px;
+  }
+}
+
+.hero.is-aiming .hero__lens {
+  opacity: 1;
+}
+
+/* In the lens the plan is lighter: the site stays visible behind it. */
+.hero.is-live .hero__sheet {
+  background-color: rgb(0 35 90 / 0.68);
+}
+
+.hero {
+  transition: --lr 450ms var(--ease-out);
+}
+
+/* Directional overlay: dense where the copy sits, lighter elsewhere so the
+   photography keeps doing the talking. */
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(0deg, rgb(0 20 51 / 0.9) 0%, rgb(0 20 51 / 0.55) 30%, rgb(0 20 51 / 0) 58%),
+    linear-gradient(90deg, rgb(0 35 90 / 0.6) 0%, rgb(0 35 90 / 0) 55%);
+  pointer-events: none;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 1;
+  align-self: end;
+  padding-block: var(--space-8) var(--space-6);
+}
+
+.hero__eyebrow,
+.hero__text,
+.hero__actions {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: hero-reveal 800ms var(--ease-out) forwards;
+}
+
+/* The signature on first paint: the eyebrow's orange line is drawn, then the
+   title is lifted onto its baseline — same gesture as every section heading. */
+.hero__title {
+  clip-path: inset(100% -0.2em -0.3em -0.2em);
+  transform: translateY(0.35em);
+  animation: hero-title-rise 1000ms var(--ease-out) forwards;
+}
+
+.hero__eyebrow {
+  animation-delay: 80ms;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  font-family: var(--font-menu);
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--color-white);
+}
+
+.hero__eyebrow::before {
+  content: "";
+  width: 32px;
+  height: 3px;
+  background: var(--color-accent);
+}
+
+.hero__title {
+  animation-delay: 300ms;
+  max-width: 18ch;
+  margin-bottom: var(--space-4);
+  font-family: var(--font-heading);
+  font-size: var(--text-h1);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.015em;
+}
+
+.hero__text {
+  animation-delay: 620ms;
+  max-width: 52ch;
+  margin-bottom: var(--space-5);
+  color: var(--color-text-on-dark-muted);
+  font-size: var(--text-lead);
+  line-height: 1.6;
+}
+
+.hero__actions {
+  animation-delay: 740ms;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+@keyframes hero-reveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-title-rise {
+  to {
+    clip-path: inset(-0.2em -0.2em -0.3em -0.2em);
+    transform: none;
+  }
+}
+
+/* Caption of the photo, bottom right, discreet. */
+.hero__caption {
+  position: relative;
+  z-index: 1;
+  padding-bottom: var(--space-4);
+  color: rgb(255 255 255 / 0.7);
+  font-size: var(--text-sm);
+  text-align: right;
+}
+
+@media (max-width: 767px) {
+  .hero__caption {
+    display: none;
+  }
+}
+
+/* ----- Ouverture « le chantier sort du plan » ------------------------------
+   0 – 0.4 s   blueprint sheet
+   0.3 – 1.2 s ground and site boundary (dashed)
+   0.6 – 1.7 s tanks, structures, conveyor
+   1.2 – 2.3 s the six cranes rise (boom drawn from its base), hooks drop
+   1.8 – 2.6 s annotations: dot, leader, label
+   2.6 – 3.9 s the plotter trait sweeps the sheet away; the site develops
+               from blue to colour; lines and labels fade
+   then        a very slow push-in (photo and plan together, so the lens
+               stays aligned)
+   The copy rises from 0.9 s so the message is never held back. */
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero__line {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: hero-draw 900ms var(--ease-out) var(--d, 0ms) forwards;
+  }
+
+  .hero__line--ground { --d: calc(300ms + var(--i) * 120ms); stroke-dasharray: 1; }
+  .hero__line:not(.hero__line--ground):not(.hero__line--crane):not(.hero__line--hook) { --d: calc(600ms + var(--i) * 90ms); }
+  .hero__line--crane { --d: calc(1200ms + var(--i) * 140ms); animation-duration: 800ms; }
+  .hero__line--hook { --d: calc(1700ms + var(--i) * 140ms); animation-duration: 500ms; }
+
+  .hero__label {
+    opacity: 0;
+    animation: hero-label 500ms var(--ease-out) calc(1800ms + var(--i) * 150ms) forwards;
+  }
+
+  .hero__label path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: hero-draw 500ms var(--ease-out) calc(1800ms + var(--i) * 150ms) forwards;
+  }
+
+  .hero__sheet {
+    animation: hero-sweep 1300ms cubic-bezier(0.55, 0, 0.25, 1) 2600ms both;
+  }
+
+  .hero__blueprint svg {
+    animation: hero-plan-out 900ms ease 3100ms both;
+  }
+
+  .hero__scan {
+    animation: hero-scan 1300ms cubic-bezier(0.55, 0, 0.25, 1) 2600ms both;
+  }
+
+  .hero__img {
+    animation: hero-develop 1500ms ease 2700ms both;
+  }
+
+  .hero__media,
+  .hero__blueprint {
+    animation: hero-push 22s cubic-bezier(0.2, 0, 0.2, 1) 3000ms both;
+  }
+
+  .hero__eyebrow { animation-delay: 900ms; }
+  .hero__title { animation-delay: 1050ms; }
+  .hero__text { animation-delay: 1300ms; }
+  .hero__actions { animation-delay: 1420ms; }
+
+  .hero__caption {
+    opacity: 0;
+    animation: hero-reveal 600ms var(--ease-out) 4000ms forwards;
+  }
+
+  /* Live (after the opening): the plan is whole again, shown only in the
+     lens. No more intro animations on the plan. */
+  .hero.is-live .hero__sheet,
+  .hero.is-live .hero__blueprint svg,
+  .hero.is-live .hero__line,
+  .hero.is-live .hero__label,
+  .hero.is-live .hero__label path {
+    animation: none;
+    opacity: 1;
+    stroke-dashoffset: 0;
+    clip-path: none;
+  }
+}
+
+@keyframes hero-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes hero-label {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes hero-sweep {
+  from { clip-path: inset(0 0 0 0); }
+  to { clip-path: inset(0 0 0 100%); }
+}
+
+@keyframes hero-scan {
+  0% { opacity: 1; transform: translateX(0); }
+  92% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(100%); }
+}
+
+@keyframes hero-plan-out {
+  to { opacity: 0; }
+}
+
+@keyframes hero-develop {
+  from { filter: grayscale(1) brightness(0.5) contrast(1.15); }
+  to { filter: none; }
+}
+
+@keyframes hero-push {
+  from { scale: 1; }
+  to { scale: 1.06; }
+}
+
+/* Caption + hint, bottom right. */
+.hero__hint {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hero.is-live .hero__hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: var(--space-4);
+    padding-left: var(--space-4);
+    border-left: 1px solid rgb(255 255 255 / 0.3);
+    color: var(--color-white);
+  }
+
+  .hero.is-live .hero__hint::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-accent);
+  }
+}
+
+@media (max-width: 767px) {
+  .hero__label {
+    display: none;
+  }
+}
+
+.hero :focus-visible {
+  outline-color: var(--color-white);
+}
+
+@media (max-width: 479px) {
+  .hero__actions .btn {
+    flex: 1 1 100%;
+  }
+}
+
+/* ----- Two slides (js/hero-slider.js) --------------------------------------
+   Photos cross-fade; the copy of the active slide rises in its place. The
+   bar under the copy: one tab per slide (its line fills with the time left)
+   and the pause button. Without JS: slide 1 only, no controls. */
+
+.hero__media {
+  opacity: 0;
+  transition: opacity 1200ms ease;
+}
+
+.hero__media.is-active {
+  opacity: 1;
+}
+
+.hero__img--still {
+  animation: none;
+}
+
+/* Slide 2's photo is only fetched once the page has loaded (a hidden lazy
+   image isn't loaded): it never competes with the first photo. */
+.hero:not(.has-second-photo) [data-slide-media="1"] {
+  display: none;
+}
+
+.hero__content {
+  display: grid;
+}
+
+.hero__slide {
+  grid-area: 1 / 1;
+  align-self: end;
+}
+
+.hero.has-slider .hero__slide:not(.is-active) {
+  opacity: 0;
+  visibility: hidden;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero.has-slider .hero__slide {
+    transition: opacity 600ms ease, transform 700ms var(--ease-out), visibility 0s;
+  }
+
+  .hero.has-slider .hero__slide:not(.is-active) {
+    transform: translateY(14px);
+    transition: opacity 400ms ease, transform 400ms ease, visibility 0s 400ms;
+  }
+}
+
+/* Slide 2's copy needs no intro: it is shown by the slider. */
+.hero__slide[data-slide="1"] :is(.hero__eyebrow, .hero__text, .hero__actions, .hero__title) {
+  opacity: 1;
+  transform: none;
+  clip-path: none;
+  animation: none;
+}
+
+.hero__controls {
+  display: none;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.hero.has-slider .hero__controls {
+  display: flex;
+}
+
+.hero__tabs {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.hero__tab {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 4px 10px;
+  border: 0;
+  background: none;
+  color: rgb(255 255 255 / 0.7);
+  font-family: var(--font-menu);
+  font-size: 0.75rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.hero__tab:hover,
+.hero__tab[aria-pressed="true"] {
+  color: var(--color-white);
+}
+
+.hero__tab-num {
+  color: var(--color-accent-on-dark);
+}
+
+/* The tab's line: a track, the orange fill shows the time left. */
+.hero__tab-bar {
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  height: 2px;
+  background: rgb(255 255 255 / 0.25);
+}
+
+.hero__tab-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-accent);
+  transform: scaleX(var(--p, 0));
+  transform-origin: left;
+}
+
+.hero__tab[aria-pressed="true"] .hero__tab-bar::after {
+  transform: scaleX(max(var(--p, 0), 0.04));
+}
+
+.hero.is-paused .hero__tab[aria-pressed="true"] .hero__tab-bar::after,
+.hero__tab[aria-pressed="false"] .hero__tab-bar::after {
+  transform: scaleX(0);
+}
+
+.hero.is-paused .hero__tab[aria-pressed="true"] .hero__tab-bar {
+  background: var(--color-accent);
+}
+
+.hero__tab:focus-visible,
+.hero__pause:focus-visible {
+  outline: 3px solid var(--color-white);
+  outline-offset: 2px;
+}
+
+.hero__pause {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgb(255 255 255 / 0.35);
+  border-radius: 50%;
+  background: none;
+  color: var(--color-white);
+  cursor: pointer;
+  transition: border-color var(--transition-fast);
+}
+
+.hero__pause:hover {
+  border-color: var(--color-white);
+}
+
+.hero__pause .hero__play-icon,
+.hero.is-paused .hero__pause .hero__pause-icon {
+  display: none;
+}
+
+.hero.is-paused .hero__pause .hero__play-icon {
+  display: block;
+}
+
+/* The bar sits left (controls) and right (hint). */
+.hero__caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+@media (max-width: 767px) {
+  .hero__caption {
+    display: flex;
+  }
+
+  .hero__tab {
+    font-size: 0.6875rem;
+  }
+}
+
+/* ----- The 3D plan replaces the drawn plan (every size) -----------------------
+   The photo shows at once (short develop), the copy rises quickly; the 3D
+   plan (js/hero-3d.js) floats on the photo — on the right from 1024 px,
+   above the copy on smaller screens. */
+.hero__blueprint,
+.hero__lens,
+.hero .hero__hint,
+.hero.is-live .hero__hint {
+  display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero__img {
+    animation: hero-develop 1200ms ease 150ms both;
+  }
+
+  .hero__img--still {
+    animation: none;
+  }
+
+  .hero__eyebrow { animation-delay: 150ms; }
+  .hero__title { animation-delay: 300ms; }
+  .hero__text { animation-delay: 560ms; }
+  .hero__actions { animation-delay: 680ms; }
+  .hero__caption { animation-delay: 900ms; }
+
+  .hero__media {
+    animation-delay: 600ms;
+  }
+}
+
+.hero-plan {
+  display: none;
+}
+
+/* Phones and tablets: centred in the free space above the copy, its size
+   set from that space (--plan-size / --plan-top, js/pages/home.js). */
+@media (max-width: 1023px) {
+  .hero-plan:not([hidden]) {
+    position: absolute;
+    top: var(--plan-top, 2%);
+    left: 50%;
+    z-index: 1;
+    display: block;
+    width: var(--plan-size, 240px);
+    aspect-ratio: 1;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateX(-50%);
+    transition: opacity 700ms ease;
+  }
+
+  .hero-plan::before {
+    content: "";
+    position: absolute;
+    inset: 2%;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgb(0 20 51 / 0.58), rgb(0 20 51 / 0.3) 55%, transparent);
+  }
+
+  .hero-plan.is-ready {
+    opacity: 1;
+  }
+
+  .hero-plan.is-switching {
+    opacity: 0;
+    transition-duration: 300ms;
+  }
+
+  .hero-plan.is-cramped {
+    display: none;
+  }
+
+  .hero-plan__label {
+    bottom: 2%;
+    font-size: 0.625rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  /* « Le plan flotte sur le chantier »: no panel — the 3D plan is drawn over
+     the photo, a soft dark halo (no edge) keeps its lines legible. */
+  .hero-plan:not([hidden]) {
+    position: absolute;
+    top: 45%;
+    right: max(var(--space-4), calc((100% - var(--container-max)) / 2));
+    z-index: 1;
+    display: block;
+    width: clamp(360px, 36vw, 580px);
+    aspect-ratio: 1;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-50%);
+    transition: opacity 700ms ease;
+  }
+
+  .hero-plan::before {
+    content: "";
+    position: absolute;
+    inset: 4%;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgb(0 20 51 / 0.62), rgb(0 20 51 / 0.32) 55%, transparent);
+  }
+
+  .hero-plan.is-ready {
+    opacity: 1;
+  }
+
+  .hero-plan.is-switching {
+    opacity: 0;
+    transition-duration: 300ms;
+  }
+}
+
+.hero-plan__stage {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-plan__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Annotation, like the plan's labels: an orange lead, then the text. */
+.hero-plan__label {
+  position: absolute;
+  left: 50%;
+  bottom: 6%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  translate: -50% 0;
+  white-space: nowrap;
+  color: var(--color-white);
+  text-shadow: 0 1px 8px rgb(0 20 51 / 0.8);
+  font-family: var(--font-menu);
+  font-size: 0.6875rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.hero-plan__label::before {
+  content: "";
+  width: 28px;
+  height: 2px;
+  background: var(--color-accent);
+}
+
+/* ==========================================================================
+   About + key figures
+   ========================================================================== */
+
+.about__inner {
+  display: grid;
+  gap: var(--space-7);
+  align-items: center;
+}
+
+.about__text {
+  max-width: var(--measure);
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+  line-height: 1.75;
+}
+
+.about__text + .link-arrow {
+  margin-top: var(--space-3);
+}
+
+.about__media img {
+  width: 100%;
+  height: auto;
+}
+
+/* Three columns: text | map | key figures */
+@media (min-width: 1024px) {
+  .about__inner {
+    grid-template-columns: 1fr 1.4fr 0.8fr;
+    gap: var(--space-7);
+  }
+}
+
+/* Key figures — vertical list in the third column */
+.stats-band {
+  display: grid;
+  border-top: 1px solid var(--color-border);
+}
+
+.stats-band__item {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  align-items: center;
+  gap: 0 var(--space-4);
+  padding-block: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.stats-band__number {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 1.7rem + 1vw, 2.5rem);
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--color-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.stats-band__label {
+  font-family: var(--font-menu);
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--color-primary);
+}
+
+.stats-band__number {
+  grid-row: span 2;
+}
+
+.stats-band__text {
+  grid-column: 2;
+  align-self: start;
+  margin-top: 2px;
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+
+/* Tablet: figures sit in three columns under text + map */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .stats-band {
+    grid-template-columns: repeat(3, 1fr);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .stats-band__item {
+    grid-template-columns: 1fr;
+    align-content: start;
+    padding: var(--space-5) var(--space-4);
+    border-bottom: 0;
+  }
+
+  .stats-band__item + .stats-band__item {
+    border-left: 1px solid var(--color-border);
+  }
+
+  .stats-band__number {
+    grid-row: auto;
+    margin-bottom: var(--space-2);
+  }
+
+  .stats-band__text {
+    grid-column: auto;
+  }
+}
+
+/* Phone: a tighter About — smaller map, compact figures row. */
+@media (max-width: 639px) {
+  .about__inner {
+    gap: var(--space-5);
+  }
+
+  .about__media {
+    max-width: 300px;
+    margin-inline: auto;
+  }
+
+  .stats-band__item {
+    grid-template-columns: 4.75rem 1fr;
+    padding-block: var(--space-3);
+  }
+
+  .stats-band__number {
+    font-size: 1.875rem;
+  }
+}
+
+/* ==========================================================================
+   Video intro — navy band, copy on plain ground, framed 16:9 player.
+   Deliberately unlike the hero (no full-bleed photo, no text on the image).
+   The poster is a real ATC site photo; the YouTube player only loads on click.
+   ========================================================================== */
+
+.video-intro__inner {
+  display: grid;
+  gap: var(--space-6);
+  align-items: center;
+}
+
+.video-intro__content .section-eyebrow {
+  margin-bottom: var(--space-3);
+}
+
+.video-intro__title {
+  font-family: var(--font-heading);
+  font-size: var(--text-h2);
+  line-height: var(--leading-heading);
+  color: var(--color-white);
+}
+
+.video-intro__text {
+  max-width: 40ch;
+  margin-top: var(--space-3);
+  color: var(--color-text-on-dark-muted);
+  line-height: 1.65;
+}
+
+.video-intro__cta {
+  margin-top: var(--space-5);
+}
+
+.video-intro.is-playing .video-intro__cta {
+  visibility: hidden;
+}
+
+.video-intro__player {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid var(--color-border-on-dark);
+  border-radius: var(--radius-md);
+  background: var(--color-primary-900);
+  box-shadow: 0 24px 60px rgb(0 0 0 / 0.35);
+}
+
+.video-facade {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: var(--color-primary-900);
+  cursor: pointer;
+}
+
+.video-facade picture,
+.video-facade img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.video-facade img {
+  object-fit: cover;
+  object-position: 50% 45%;
+  transition: transform 1200ms var(--ease-out);
+}
+
+/* Light veil only: the photo stays a photo, the player reads as a screen. */
+.video-facade::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgb(0 35 90 / 0.22);
+  transition: background-color var(--transition-base);
+}
+
+.video-facade:hover img,
+.video-facade:focus-visible img {
+  transform: scale(1.03);
+}
+
+.video-facade:hover::after,
+.video-facade:focus-visible::after {
+  background: rgb(0 35 90 / 0.08);
+}
+
+.video-facade:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: -3px;
+}
+
+.video-facade__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: var(--color-white);
+  box-shadow: 0 0 0 10px rgb(255 255 255 / 0.18);
+  transform: translate(-50%, -50%);
+  transition: transform var(--transition-emphasis), box-shadow var(--transition-emphasis);
+}
+
+.video-facade__play svg {
+  margin-left: 3px;
+}
+
+.video-facade:hover .video-facade__play,
+.video-facade:focus-visible .video-facade__play {
+  transform: translate(-50%, -50%) scale(1.06);
+  box-shadow: 0 0 0 16px rgb(255 255 255 / 0.22);
+}
+
+.video-intro__iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+@media (max-width: 1023px) {
+  .video-intro__cta {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .video-intro__inner {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-9);
+  }
+}
+
+/* ==========================================================================
+   Process — "De l'étude à la mise en service"
+   The page's unforgettable moment: "le plan devient la structure".
+   A sticky illustration evolves as the five steps scroll past (js/pages/home.js
+   sets data-stage + cumulative .reached-N on the stage, .is-reached /
+   .is-active on the steps). Scroll stays natural — nothing is pinned or
+   hijacked. Default markup = final state (installation in service), so it
+   reads fine without JS; under reduced motion states switch without movement.
+   ========================================================================== */
+
+.process__head {
+  max-width: var(--measure);
+  margin-bottom: var(--space-5);
+}
+
+.process__intro {
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+
+.process__layout {
+  display: grid;
+  gap: var(--space-6);
+}
+
+/* ----- Stage ------------------------------------------------------------- */
+
+.process__stage-wrap {
+  position: sticky;
+  top: calc(var(--header-h) + var(--space-3));
+  z-index: 2;
+}
+
+.process__stage {
+  --steel: #C9D3E3;
+  --steel-light: #E8EDF4;
+  --steel-dark: #7488AB;
+  --plan: rgb(150 185 245 / 0.9);
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--color-primary);
+  color: rgb(255 255 255 / 0.07);
+  box-shadow: var(--shadow-lg);
+}
+
+.process__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 30svh;
+}
+
+.process__caption {
+  position: absolute;
+  z-index: 2;
+  left: var(--space-3);
+  top: var(--space-3);
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  background: rgb(0 20 51 / 0.72);
+  color: var(--color-white);
+  font-family: var(--font-menu);
+  font-size: 0.75rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.process__caption [data-process-index] {
+  color: var(--color-accent);
+}
+
+/* Shared timing for every stage change. */
+.process__stage * {
+  transition-timing-function: var(--ease-out);
+}
+
+/* Grid + blueprint layer: strong while it is a plan, gone once it stands. */
+.ps-grid {
+  transition: opacity 900ms;
+}
+
+.ps-plan {
+  opacity: 0;
+  transition: opacity 700ms;
+}
+
+.ps-axis,
+.ps-dim {
+  fill: none;
+  stroke: var(--plan);
+  stroke-width: 1;
+  stroke-dasharray: 10 4 2 4;
+}
+
+.ps-dim {
+  stroke-dasharray: none;
+}
+
+.ps-bubble circle {
+  fill: var(--color-primary);
+  stroke: var(--plan);
+  stroke-width: 1.2;
+}
+
+.ps-bubble text {
+  fill: var(--plan);
+  font-family: var(--font-menu);
+  font-size: 13px;
+  text-anchor: middle;
+}
+
+[data-stage="0"] .ps-plan,
+[data-stage="1"] .ps-plan {
+  opacity: 1;
+}
+
+[data-stage="2"] .ps-plan {
+  opacity: 0.35;
+}
+
+.reached-3 .ps-grid {
+  opacity: 0.45;
+}
+
+.ps-ground {
+  stroke: rgb(255 255 255 / 0.35);
+  stroke-width: 2;
+}
+
+/* Parts: blueprint outlines at step 0, steel from step 1, exploded during
+   fabrication + logistics, locked in place at assembly. */
+.ps-part {
+  transition: transform 1100ms calc(var(--order, 0) * 120ms);
+}
+
+[data-stage="1"] .ps-part,
+[data-stage="2"] .ps-part {
+  transform: var(--explode);
+  transition-delay: calc(var(--order, 0) * 60ms);
+}
+
+.ps-solid,
+.ps-truss,
+.ps-detail {
+  transition: fill 600ms, stroke 600ms, stroke-width 600ms, opacity 600ms;
+}
+
+.ps-solid {
+  fill: var(--steel);
+  stroke: transparent;
+  stroke-width: 1.5;
+}
+
+.ps-solid--light {
+  fill: var(--steel-light);
+}
+
+.ps-solid--dark {
+  fill: var(--steel-dark);
+}
+
+.ps-tank-top {
+  fill: #F6F8FB;
+}
+
+.ps-truss {
+  fill: none;
+  stroke: var(--steel);
+  stroke-width: 4;
+  stroke-linejoin: round;
+}
+
+.ps-detail {
+  fill: none;
+  stroke: rgb(0 35 90 / 0.25);
+  stroke-width: 2;
+}
+
+[data-stage="0"] .ps-solid {
+  fill: transparent;
+  stroke: var(--plan);
+  stroke-dasharray: 6 4;
+}
+
+[data-stage="0"] .ps-truss {
+  stroke: var(--plan);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 4;
+}
+
+[data-stage="0"] .ps-detail {
+  opacity: 0;
+}
+
+/* Status light on the skid. */
+.ps-status {
+  fill: rgb(0 35 90 / 0.35);
+  transition: fill 400ms;
+}
+
+/* Weld sparks — fabrication only; they sit inside each part so they follow
+   the exploded view. */
+.ps-spark {
+  fill: var(--color-accent);
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-stage="1"] .ps-spark {
+    animation: ps-spark 1.4s ease-out calc(var(--s) * 230ms) infinite;
+  }
+}
+
+@keyframes ps-spark {
+  0%, 60%, 100% { opacity: 0; transform: scale(0.4); }
+  8% { opacity: 1; transform: scale(1.4); }
+  30% { opacity: 0.6; transform: scale(1); }
+}
+
+.ps-spark {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* Logistics: the orange route is drawn, the truck drives in, then leaves. */
+.ps-route {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 900ms;
+}
+
+[data-stage="2"] .ps-route {
+  stroke-dashoffset: 0;
+}
+
+.ps-truck {
+  opacity: 0;
+  transform: translateX(-180px);
+  transition: transform 1400ms cubic-bezier(0.65, 0, 0.35, 1), opacity 500ms;
+}
+
+[data-stage="2"] .ps-truck {
+  opacity: 1;
+  transform: translateX(-26px);
+  transition-delay: 250ms;
+}
+
+.reached-3 .ps-truck {
+  opacity: 0;
+  transform: translateX(-180px);
+  transition-duration: 900ms, 400ms;
+}
+
+.ps-truck-load { fill: var(--steel); }
+.ps-truck-turret { fill: var(--steel-dark); }
+
+/* Truck-mounted crane: once the truck has stopped, the boom unfolds (pivot at
+   the turret), the cable appears and the load is lifted off the bed. */
+.ps-truck-boom {
+  fill: var(--color-accent);
+  transform-origin: 78px 386px;
+  transition: transform 500ms var(--ease-out);
+}
+
+[data-stage="2"] .ps-truck-boom {
+  transform: rotate(63deg);
+  transition: transform 900ms var(--ease-out) 1700ms;
+}
+
+.ps-truck-cable {
+  stroke: var(--steel-light);
+  stroke-width: 1.5;
+  opacity: 0;
+}
+
+/* The beam delivered by the truck becomes the site's truss:
+   lifted off the bed (2.65s → 3.4s), short hold, then hoisted in an arc to
+   the top of the site (3.75s → 4.9s) where it hands over to the truss hanging
+   on the tower crane, which appears as it arrives (4.75s). */
+.ps-truck-load {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+[data-stage="2"] .ps-truck-cable {
+  animation: ps-truck-cable 1250ms linear 2550ms both;
+}
+
+@keyframes ps-truck-cable {
+  0% { opacity: 0; }
+  8%, 88% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+[data-stage="2"] .ps-truck-load {
+  animation: ps-load-hoist 2400ms linear 2650ms both;
+}
+
+/* Load centre on the bed (truck at -26px): (20, 382.5). Truss centre once
+   exploded: (238, 105) → translate(218px, -277.5px). */
+@keyframes ps-load-hoist {
+  0% { transform: none; opacity: 1; animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1); }
+  30% { transform: translateY(-18px); }
+  45% { transform: translateY(-18px); animation-timing-function: cubic-bezier(0.45, 0, 0.25, 1); }
+  60% { transform: translate(70px, -150px) scaleX(1.5); }
+  92% { transform: translate(218px, -277.5px) scaleX(2.57); opacity: 1; }
+  100% { transform: translate(218px, -277.5px) scaleX(2.57); opacity: 0; }
+}
+
+[data-stage="2"] .ps-part--beam,
+[data-stage="2"] .ps-crane-cable {
+  animation: ps-appear 400ms ease-out 4750ms both;
+}
+
+@keyframes ps-appear {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ----- Crews ---------------------------------------------------------------
+   Small workers (white helmet, orange high-visibility vest): welding in the
+   workshop at "Fabrication", guiding the crane on site at "Montage". */
+.ps-crew {
+  opacity: 0;
+  transition: opacity 400ms;
+}
+
+[data-stage="1"] .ps-crew--fab,
+[data-stage="3"] .ps-crew--site {
+  opacity: 1;
+  transition-delay: 500ms;
+}
+
+/* Scaled from the feet so they stay on the ground; torches still reach
+   the parts they weld. */
+.ps-worker {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transform: scale(1.3);
+}
+
+.ps-worker-legs,
+.ps-worker-arm {
+  fill: none;
+  stroke: var(--steel-dark);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.ps-worker-arm {
+  stroke: var(--color-accent);
+  stroke-width: 2.6;
+}
+
+.ps-worker-tool {
+  fill: none;
+  stroke: var(--steel-light);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.ps-worker-vest { fill: var(--color-accent); }
+.ps-worker-stripe { stroke: var(--color-white); stroke-width: 1.6; }
+.ps-worker-head { fill: var(--steel-light); }
+.ps-worker-helmet { fill: var(--color-white); }
+
+/* Welding effects — hidden until the welders are at work. */
+.ps-weld-glow { fill: #FFE2C2; opacity: 0; transform-box: fill-box; transform-origin: center; }
+.ps-weld-core { fill: var(--color-white); opacity: 0; }
+.ps-weld-spark { fill: #FFC07A; opacity: 0; }
+
+/* The crews act, they don't just stand: they walk to their post (legs bob
+   while they move), then weld / guide the crane. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-stage="1"] .ps-crew--fab .ps-walk,
+  [data-stage="3"] .ps-crew--site .ps-walk {
+    animation: ps-walk-in 1300ms cubic-bezier(0.3, 0, 0.3, 1) calc(400ms + var(--wi) * 150ms) both;
+  }
+
+  [data-stage="1"] .ps-crew--fab .ps-walk--moving .ps-worker-body,
+  [data-stage="3"] .ps-crew--site .ps-walk--moving .ps-worker-body {
+    animation: ps-bob 325ms ease-in-out calc(400ms + var(--wi) * 150ms) 4 alternate;
+  }
+
+  /* Welders: the torch travels along the seam, the arc flickers, sparks fly. */
+  [data-stage="1"] .ps-worker--weld .ps-worker-limb {
+    animation: ps-weld-arm 1400ms ease-in-out calc(1800ms + var(--wi) * 150ms) infinite alternate;
+  }
+
+  [data-stage="1"] .ps-weld-glow {
+    animation: ps-weld-flicker 260ms steps(2) calc(1800ms + var(--wi) * 150ms) infinite;
+  }
+
+  [data-stage="1"] .ps-weld-core {
+    animation: ps-appear 120ms linear calc(1800ms + var(--wi) * 150ms) both;
+  }
+
+  [data-stage="1"] .ps-weld-spark {
+    animation: ps-weld-spray 700ms cubic-bezier(0.2, 0.7, 0.4, 1) calc(1800ms + var(--wi) * 150ms + var(--sd)) infinite;
+  }
+
+  /* Riggers: one waves the crane down, the other walks in and points. */
+  [data-stage="3"] .ps-worker--signal .ps-worker-limb {
+    animation: ps-wave-arm 650ms ease-in-out 500ms infinite alternate;
+  }
+
+  [data-stage="3"] .ps-worker--point .ps-worker-limb {
+    animation: ps-point-arm 1200ms ease-in-out 1900ms infinite alternate;
+  }
+}
+
+@keyframes ps-walk-in {
+  from { transform: translateX(var(--from)); }
+  to { transform: none; }
+}
+
+@keyframes ps-bob {
+  from { transform: none; }
+  to { transform: translateY(-1.5px); }
+}
+
+@keyframes ps-weld-arm {
+  from { transform: rotate(-6deg); }
+  to { transform: rotate(7deg); }
+}
+
+@keyframes ps-weld-flicker {
+  0% { opacity: 0.95; transform: scale(1.2); }
+  50% { opacity: 0.45; transform: scale(0.8); }
+  100% { opacity: 0.95; transform: scale(1.2); }
+}
+
+@keyframes ps-weld-spray {
+  0% { opacity: 1; transform: none; }
+  60% { opacity: 0.8; transform: translate(var(--sx), var(--sy)); }
+  100% { opacity: 0; transform: translate(calc(var(--sx) * 1.3), calc(var(--sy) + 10px)); }
+}
+
+@keyframes ps-wave-arm {
+  from { transform: rotate(-28deg); }
+  to { transform: rotate(14deg); }
+}
+
+@keyframes ps-point-arm {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-10deg); }
+}
+.ps-truck-bed { fill: var(--steel-dark); }
+.ps-truck-cab { fill: var(--color-accent); }
+.ps-truck-wheel { fill: #0B1A33; stroke: var(--steel); stroke-width: 2; }
+
+/* Piping: fitted at assembly (drawn after the parts lock), alive in service. */
+.ps-pipe {
+  fill: none;
+  stroke: var(--steel);
+  stroke-width: 7;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 900ms 700ms;
+}
+
+.reached-3 .ps-pipe {
+  stroke-dashoffset: 0;
+}
+
+.ps-flow {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 0.03 0.05;
+  opacity: 0;
+  transition: opacity 500ms;
+}
+
+.reached-4 .ps-flow {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reached-4 .ps-flow {
+    animation: ps-flow 1.6s linear infinite;
+  }
+}
+
+@keyframes ps-flow {
+  to { stroke-dashoffset: -0.08; }
+}
+
+/* Tank fills, status lights, "EN SERVICE" badge. */
+.ps-level {
+  fill: var(--color-accent);
+  opacity: 0.32;
+  transform-box: fill-box;
+  transform-origin: bottom;
+  transform: scaleY(0);
+  transition: transform 1600ms 200ms;
+}
+
+.reached-4 .ps-level {
+  transform: scaleY(0.68);
+}
+
+.reached-4 .ps-status {
+  fill: var(--color-accent);
+}
+
+.ps-live {
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 500ms 500ms, transform 500ms 500ms;
+}
+
+.ps-live rect {
+  fill: rgb(255 255 255 / 0.08);
+  stroke: rgb(255 255 255 / 0.25);
+}
+
+.ps-live circle {
+  fill: var(--color-accent);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.ps-live text {
+  fill: var(--color-white);
+  font-family: var(--font-menu);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+}
+
+.reached-4 .ps-live {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reached-4 .ps-live circle {
+    animation: ps-live 2.4s ease-in-out infinite;
+  }
+}
+
+@keyframes ps-live {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.75); }
+}
+
+/* ----- Camera ------------------------------------------------------------
+   One slow, eased move per step: close on the plan, steady in the workshop,
+   follows the truck, wide for the crane, a gentle push-in once in service. */
+.ps-camera {
+  transform-origin: 320px 240px;
+  transition: transform 1600ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+[data-stage="0"] .ps-camera { transform: scale(1.16) translate(0, 8px); }
+[data-stage="1"] .ps-camera { transform: scale(1.07) translate(0, 14px); }
+[data-stage="2"] .ps-camera { transform: translate(58px, -6px) scale(1.12); }
+[data-stage="3"] .ps-camera { transform: scale(0.96) translate(0, 10px); }
+
+/* ----- Plotter -----------------------------------------------------------
+   Before the stage is seen it is covered; at "Ingénierie" an orange plotter
+   line sweeps across and the plan appears behind it. Replays on rewind. */
+.ps-scanner {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ps-scanner rect {
+  fill: var(--color-primary);
+}
+
+.ps-scanner path {
+  stroke: var(--color-accent);
+  stroke-width: 2.5;
+  filter: drop-shadow(0 0 6px rgb(228 82 4 / 0.8));
+}
+
+[data-stage="pre"] .ps-scanner {
+  opacity: 1;
+}
+
+[data-stage="0"] .ps-scanner {
+  animation: ps-plot 1700ms cubic-bezier(0.45, 0, 0.25, 1) 250ms both;
+}
+
+@keyframes ps-plot {
+  0% { opacity: 1; transform: translateX(0); }
+  92% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(660px); }
+}
+
+/* ----- Tower crane ------------------------------------------------------- */
+.ps-crane {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 700ms, transform 900ms;
+}
+
+[data-stage="2"] .ps-crane,
+[data-stage="3"] .ps-crane {
+  opacity: 1;
+  transform: none;
+}
+
+.ps-crane-lattice {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.ps-crane-apex {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 2;
+}
+
+.ps-crane-cab { fill: var(--steel-light); }
+.ps-crane-weight { fill: var(--steel-dark); }
+
+/* The cable is as long as the truss's final drop; it is scaled to the
+   exploded height and runs out in sync with the truss (same duration,
+   easing and delay as .ps-part--beam). */
+.ps-crane-cable {
+  stroke: var(--steel-light);
+  stroke-width: 1.5;
+  transform-box: fill-box;
+  transform-origin: top;
+  transform: scaleY(0.22);
+  transition: transform 1100ms var(--ease-out) 240ms;
+}
+
+.reached-3 .ps-crane-cable {
+  transform: none;
+}
+
+.ps-hook {
+  fill: var(--steel-dark);
+  stroke: var(--steel-light);
+  stroke-width: 1;
+  opacity: 0;
+  transition: opacity 400ms;
+}
+
+[data-stage="2"] .ps-hook,
+[data-stage="3"] .ps-hook {
+  opacity: 1;
+}
+
+/* ----- Power on ------------------------------------------------------------
+   In service the scene goes to night and the floodlights come on, one by one,
+   each with a short flicker. */
+.process__stage {
+  transition: background-color 1200ms var(--ease-out);
+}
+
+.process__stage.reached-4 {
+  background-color: var(--color-primary-900);
+}
+
+/* Lamps are fitted with the truss: they appear once it has landed. */
+.ps-lamp {
+  fill: var(--steel-dark);
+  opacity: 0;
+  transition: fill 300ms, opacity 300ms;
+}
+
+.reached-3 .ps-lamp {
+  opacity: 1;
+  transition-delay: 0ms, 1300ms;
+}
+
+.ps-beam-light {
+  fill: url(#process-light);
+  opacity: 0;
+  transition: opacity 500ms;
+}
+
+.reached-4 .ps-lamp {
+  fill: #FFF3E8;
+  transition-delay: calc(900ms + var(--l) * 280ms), 0ms;
+}
+
+.reached-4 .ps-beam-light {
+  opacity: 1;
+  transition-delay: calc(900ms + var(--l) * 280ms);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reached-4 .ps-beam-light {
+    animation: ps-flicker 600ms steps(1) calc(900ms + var(--l) * 280ms) both;
+  }
+}
+
+@keyframes ps-flicker {
+  0% { opacity: 0; }
+  15% { opacity: 0.8; }
+  25% { opacity: 0.1; }
+  40% { opacity: 1; }
+  52% { opacity: 0.3; }
+  65%, 100% { opacity: 1; }
+}
+
+/* ----- Finale: the plant powers the region ---------------------------------
+   Night falls, the floodlights flicker on, the flux runs, then an energy wave
+   leaves the installation: as it passes, the lights of the surrounding
+   industrial site come on (each light's delay is proportional to its distance,
+   --d, in the SVG) while the camera pulls back to reveal the whole site.
+   Timeline after reaching step 5: night 0s · lamps 0.9s · wave 1.8s → 3.4s ·
+   site lights follow the wave front · camera pull-back 0.6s → 4.2s. */
+
+.ps-site {
+  opacity: 0;
+  transition: opacity 500ms;
+}
+
+.reached-4 .ps-site {
+  opacity: 1;
+  transition-duration: 1400ms;
+}
+
+/* Night palette: structures read as dim silhouettes, lights do the talking. */
+.ps-site-rack,
+.ps-site-rack-posts,
+.ps-site-mast,
+.ps-site-catwalk {
+  fill: none;
+  stroke: rgb(255 255 255 / 0.22);
+  stroke-width: 2;
+}
+
+.ps-site-rack-posts { stroke-width: 1.5; stroke: rgb(255 255 255 / 0.14); }
+.ps-site-mast { stroke: rgb(255 255 255 / 0.3); stroke-width: 2.5; }
+
+.ps-site-hangar {
+  fill: rgb(255 255 255 / 0.07);
+  stroke: rgb(255 255 255 / 0.18);
+  stroke-width: 1.5;
+}
+
+.ps-site-door { fill: rgb(0 10 30 / 0.5); }
+
+.ps-site-stack { fill: rgb(255 255 255 / 0.12); }
+.ps-site-stack-bands { stroke: rgb(228 82 4 / 0.6); stroke-width: 3; }
+
+.ps-site-tank { fill: rgb(255 255 255 / 0.16); }
+.ps-site-tank-top { fill: rgb(255 255 255 / 0.24); }
+.ps-site-tank-band { stroke: rgb(0 20 51 / 0.4); stroke-width: 1.5; }
+
+.ps-site-road rect { fill: rgb(255 255 255 / 0.05); }
+.ps-site-road path {
+  stroke: rgb(255 255 255 / 0.35);
+  stroke-width: 1.5;
+  stroke-dasharray: 14 12;
+}
+
+/* Lights: off until the energy wave reaches them (~260 units/s, the speed of
+   the rings), then the whole site is lit in an orderly cascade. */
+.ps-site-lights > * {
+  fill: #FFD9B8;
+  opacity: 0;
+  transition: opacity 200ms;
+}
+
+.reached-4 .ps-site-lights > * {
+  opacity: 0.95;
+  transition: opacity 260ms calc(1800ms + var(--d) * 3.85ms);
+}
+
+/* Aviation beacon on the stack: the one light that keeps blinking. */
+.ps-site-beacon {
+  fill: var(--color-accent);
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reached-4 .ps-site-beacon {
+    animation: ps-beacon 1.6s steps(1) 3200ms infinite;
+  }
+}
+
+.reached-4 .ps-site-beacon {
+  opacity: 1;
+}
+
+@keyframes ps-beacon {
+  0%, 55% { opacity: 1; }
+  56%, 100% { opacity: 0.15; }
+}
+
+.ps-wave circle {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reached-4 .ps-wave circle {
+    animation: ps-wave 1700ms cubic-bezier(0.2, 0.6, 0.35, 1) 1800ms both;
+  }
+
+  .reached-4 .ps-wave circle:nth-child(2) {
+    animation-delay: 2050ms;
+    stroke: #FFD9B8;
+  }
+}
+
+@keyframes ps-wave {
+  0% { opacity: 0.95; transform: scale(0.2); }
+  100% { opacity: 0; transform: scale(11); }
+}
+
+/* Camera: in service it slowly pulls back to reveal the horizon. */
+[data-stage="4"] .ps-camera {
+  transform: scale(0.72) translate(-24px, -30px);
+  transition-duration: 3600ms;
+  transition-delay: 600ms;
+}
+
+/* ----- « Du plan au réel » (js/process-3d.js) -----------------------------
+   With WebGL the 3D frame takes the drawing's place (the SVG keeps the
+   stage's size, hidden); a real photo proves each step, set in the corner,
+   developing from the blueprint tint to colour like the page transitions. */
+
+.process__3d {
+  display: none;
+}
+
+/* The drawing and its caption stay hidden until the script has chosen: 3D
+   (.is-3d) or the drawing (.is-drawing). So a page reloaded already scrolled
+   down never flashes the drawing's final state. Without JS: <noscript> in
+   index.html shows them. The SVG keeps the stage's size either way. */
+.process__svg,
+.process__caption {
+  visibility: hidden;
+}
+
+.process__stage.is-drawing .process__svg,
+.process__stage.is-ready .process__caption {
+  visibility: visible;
+}
+
+.process__stage.is-3d .process__3d {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.process__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.process__proof[hidden] {
+  display: none;
+}
+
+.process__proof {
+  position: absolute;
+  right: var(--space-3);
+  bottom: var(--space-3);
+  z-index: 2;
+  width: 34%;
+  margin: 0;
+  border: 2px solid rgb(255 255 255 / 0.9);
+  border-radius: var(--radius-sm);
+  background: var(--color-primary);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+.process__proof-media {
+  display: block;
+  aspect-ratio: 4 / 3;
+  grid-area: 1 / 1;
+}
+
+.process__proof {
+  display: grid;
+}
+
+.process__proof-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  filter: grayscale(1) sepia(1) hue-rotate(195deg) saturate(3) brightness(0.62);
+}
+
+.process__proof-media.is-active img {
+  opacity: 1;
+  filter: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .process__proof-media img {
+    transition: opacity 400ms ease, filter 900ms ease 250ms;
+  }
+}
+
+.process__proof-caption {
+  grid-area: 1 / 1;
+  align-self: end;
+  display: grid;
+  gap: 1px;
+  padding: 18px 8px 6px;
+  background: linear-gradient(0deg, rgb(0 20 51 / 0.88), transparent);
+  color: var(--color-white);
+  font-size: 0.6875rem;
+  line-height: 1.3;
+}
+
+.process__proof-caption span {
+  font-family: var(--font-menu);
+  font-size: 0.5625rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-accent-on-dark);
+}
+
+@media (max-width: 639px) {
+  .process__proof {
+    width: 36%;
+    right: var(--space-2);
+    bottom: var(--space-2);
+  }
+
+  .process__proof-caption {
+    padding: 14px 6px 4px;
+    font-size: 0.625rem;
+  }
+
+  .process__proof-caption span {
+    display: none;
+  }
+}
+
+/* ----- Steps rail -------------------------------------------------------- */
+
+.process__steps {
+  --node: 22px;
+  --step-gap: var(--space-5);
+  display: grid;
+  gap: var(--step-gap);
+}
+
+.process__step {
+  position: relative;
+  padding-left: calc(var(--node) + var(--space-5));
+}
+
+.process__node {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--node);
+  height: var(--node);
+  border: 2px solid var(--color-accent);
+  border-radius: 50%;
+  background: var(--color-accent);
+  box-shadow: 0 0 0 5px var(--color-accent-50);
+  transition: background-color 300ms, border-color 300ms, box-shadow 300ms, transform 300ms var(--ease-out);
+}
+
+.process__step:not(:last-child)::before,
+.process__step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: var(--node);
+  bottom: calc(var(--step-gap) * -1);
+  left: calc(var(--node) / 2 - 1px);
+  width: 2px;
+}
+
+.process__step:not(:last-child)::before {
+  background: var(--color-border);
+}
+
+.process__step:not(:last-child)::after {
+  background: var(--color-accent);
+  transform-origin: top;
+  transition: transform 600ms var(--ease-out);
+}
+
+.process__index {
+  display: block;
+  margin-bottom: var(--space-1);
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  color: var(--color-accent-700);
+  font-variant-numeric: tabular-nums;
+}
+
+.process__title {
+  margin-bottom: var(--space-2);
+  font-family: var(--font-heading);
+  font-size: var(--text-h3);
+  color: var(--color-primary);
+}
+
+.process__text {
+  max-width: 42ch;
+  color: var(--color-text-muted);
+  line-height: 1.65;
+}
+
+.process__step > :not(.process__node) {
+  transition: opacity 400ms var(--ease-out);
+}
+
+/* With JS: steps not reached yet are quiet; the active one is in focus. */
+.js .process__steps[data-ready] .process__step:not(.is-reached) .process__node {
+  border-color: var(--color-gray-200);
+  background: var(--color-white);
+  box-shadow: 0 0 0 5px transparent;
+}
+
+.js .process__steps[data-ready] .process__step:not(.is-passed)::after {
+  transform: scaleY(0);
+}
+
+/* Quiet but readable (contrast AA): steps not in focus fade a little. */
+.js .process__steps[data-ready] .process__step:not(.is-active) > :not(.process__node):not(.process__index) {
+  opacity: 0.72;
+}
+
+.js .process__steps[data-ready] .process__step.is-active .process__node {
+  transform: scale(1.15);
+}
+
+/* Mobile/tablet: the stage stays on top while steps scroll beneath it; each
+   step gets enough height to be read in front of its illustration. */
+@media (max-width: 1023px) {
+  .js .process__steps[data-ready] .process__step {
+    min-height: 15svh;
+  }
+}
+
+/* Desktop: steps on the left scroll past the sticky stage on the right. */
+@media (min-width: 1024px) {
+  .process__layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-8);
+    align-items: start;
+  }
+
+  .process__stage-wrap {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+    width: 100%;
+    max-width: 620px;
+    top: calc(var(--header-h) + 14svh);
+  }
+
+  .process__svg {
+    max-height: none;
+  }
+
+  .process__steps {
+    grid-column: 1;
+    grid-row: 1;
+    padding-block: 0;
+  }
+
+  .js .process__steps[data-ready] .process__step {
+    min-height: 16svh;
+  }
+}
+
+/* ==========================================================================
+   Statement — the silence after the construction. Deliberately motionless:
+   no reveal, no hover, one sentence from the group's own words.
+   ========================================================================== */
+
+.statement {
+  padding-block: clamp(3rem, 6vw, 5rem);
+  background: var(--color-white);
+}
+
+.statement__inner {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-5);
+  text-align: center;
+}
+
+.statement__trait {
+  width: 48px;
+  height: 3px;
+  background: var(--color-accent);
+}
+
+.statement__quote p {
+  max-width: 26ch;
+  font-family: var(--font-heading);
+  font-size: clamp(1.625rem, 1.1rem + 2.2vw, 2.75rem);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-primary);
+}
+
+/* ==========================================================================
+   Featured projects
+   ========================================================================== */
+
+.trust__cta {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-5);
+}
+
+/* Client / partner logos — calm, monochrome until pointed at. The band
+   reveals as one block (the trait draws its top rule), logos never scroll. */
+.clients {
+  margin-top: var(--space-6);
+}
+
+.clients__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+  font-family: var(--font-menu);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.clients__title::before,
+.clients__title::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+
+.clients__list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border-top: 1px solid var(--color-border);
+  border-left: 1px solid var(--color-border);
+}
+
+.clients__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 88px;
+  padding: var(--space-4);
+  border-right: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-white);
+}
+
+/* Logos are trimmed to their ink and exported at 2× (data/clients.js): one
+   box for all, so each logo has the same optical weight. */
+.clients__item img {
+  width: auto;
+  max-width: min(150px, 100%);
+  max-height: 56px;
+  mix-blend-mode: multiply;
+  object-fit: contain;
+  transition: transform var(--transition-emphasis);
+}
+
+/* Logos always in their own colours; a slight lift on hover. */
+.clients__item:hover img {
+  transform: scale(1.04);
+}
+
+@media (min-width: 768px) {
+  .clients__list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Endless loop (js/pages/home.js duplicates the list): logos glide slowly
+   from right to left, edges fade out, pointing at the band pauses it. */
+.clients.is-looping .clients__viewport {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+}
+
+.clients.is-looping .clients__track {
+  display: flex;
+  width: max-content;
+  animation: clients-loop var(--loop-duration, 40s) linear infinite;
+}
+
+.clients.is-looping .clients__viewport:hover .clients__track,
+.clients.is-looping .clients__viewport:focus-within .clients__track {
+  animation-play-state: paused;
+}
+
+.clients.is-looping .clients__list {
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--space-4);
+  padding-right: var(--space-4);
+  border: 0;
+}
+
+.clients.is-looping .clients__item {
+  width: 200px;
+  min-height: 88px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+@keyframes clients-loop {
+  to { transform: translateX(-50%); }
+}
+
+
+
+/* Mobile: the three featured projects slide sideways instead of stacking
+   (native scroll with snap, the next card peeks in to invite the gesture). */
+@media (max-width: 767px) {
+  .trust .project-grid {
+    display: flex;
+    gap: var(--space-4);
+    margin-inline: calc(var(--space-4) * -1);
+    padding: var(--space-1) var(--space-4) var(--space-3);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--space-4);
+    scrollbar-width: none;
+    text-align: left;
+  }
+
+  .trust .project-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .trust .project-grid > .card {
+    flex: 0 0 82%;
+    scroll-snap-align: start;
+  }
+}
+
+/* End of the home page: live time at the head office (js/pages/home.js). */
+.cta-band__clock {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  font-family: var(--font-menu);
+  font-size: 0.8125rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.8);
+}
+
+.cta-band__clock[hidden] {
+  display: none;
+}
+
+.cta-band__clock time {
+  color: var(--color-white);
+  font-variant-numeric: tabular-nums;
+}
+
+.cta-band__clock-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cta-band__clock-dot {
+    animation: hq-pulse 2.4s ease-out infinite;
+  }
+}
+
+@keyframes hq-pulse {
+  0% { box-shadow: 0 0 0 0 rgb(228 82 4 / 0.6); }
+  100% { box-shadow: 0 0 0 10px rgb(228 82 4 / 0); }
+}
+
+/* ==========================================================================
+   Le réseau en globe 3D (js/globe.js) — replaces the flat presence map when
+   WebGL is available (.about__media.has-globe). A navy globe set on the
+   page, its shadow below; the country pills under it drive it.
+   ========================================================================== */
+
+.about__media.has-globe .hotspots-map-container {
+  display: none;
+}
+
+.about__media.has-globe {
+  width: 100%;
+}
+
+.globe {
+  position: relative;
+  display: grid;
+  gap: var(--space-4);
+}
+
+.globe[hidden] {
+  display: none;
+}
+
+/* While js/globe.js loads: a navy disc the size of the globe holds its place. */
+.globe:empty {
+  aspect-ratio: 1;
+  background: radial-gradient(circle closest-side, #0a2f6c 0, #00183f 87.5%, transparent 88%);
+}
+
+.globe__stage {
+  position: relative;
+  aspect-ratio: 1;
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+.globe__stage.is-dragging {
+  cursor: grabbing;
+}
+
+.globe__stage.is-pointing {
+  cursor: pointer;
+}
+
+/* Soft contact shadow: the globe is an object on the page. */
+.globe__stage::before {
+  content: "";
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  bottom: 1%;
+  height: 8%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(0 35 90 / 0.28), transparent);
+  filter: blur(6px);
+}
+
+.globe__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.globe__labels {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.globe__label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  background: rgb(0 35 90 / 0.82);
+  color: var(--color-white);
+  font-family: var(--font-menu);
+  font-size: 0.6875rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+}
+
+.globe__label:empty {
+  display: none;
+}
+
+/* The chosen country's label. */
+.globe__label.is-active {
+  background: var(--color-white);
+  color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.globe__label--hub {
+  background: var(--color-accent-700);
+  visibility: hidden;
+}
+
+.globe__label--hub.is-on {
+  visibility: visible;
+}
+
+/* Card: what the network is, then the chosen agency. */
+.globe__card {
+  position: absolute;
+  bottom: 4%;
+  left: 0;
+  z-index: 1;
+  max-width: 14rem;
+  padding: var(--space-3) var(--space-4);
+  border-left: 2px solid var(--color-accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: rgb(255 255 255 / 0.94);
+  box-shadow: var(--shadow-sm);
+}
+
+.globe__card-kicker {
+  font-family: var(--font-menu);
+  font-size: 0.6875rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-accent-700);
+}
+
+.globe__card-title {
+  margin-top: 2px;
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  line-height: 1.2;
+  color: var(--color-primary);
+}
+
+.globe__card-line {
+  margin-top: 4px;
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+
+.globe__card-time {
+  font-variant-numeric: tabular-nums;
+}
+
+.globe__card-link {
+  margin-top: var(--space-2);
+  font-size: 0.875rem;
+}
+
+.globe__back {
+  display: block;
+  min-height: 32px;
+  margin-top: var(--space-2);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-text-muted);
+  font-family: var(--font-menu);
+  font-size: 0.75rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.globe__back:hover {
+  color: var(--color-primary);
+}
+
+.globe__back:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Country pills: the accessible way to drive the globe. */
+.globe__pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.globe__pill {
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-white);
+  color: var(--color-primary);
+  font-family: var(--font-menu);
+  font-size: 0.8125rem;
+  cursor: pointer;
+  transition: border-color var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
+}
+
+.globe__pill:hover {
+  border-color: var(--color-primary);
+}
+
+.globe__pill--hub {
+  border-color: var(--color-accent);
+}
+
+.globe__pill[aria-pressed="true"] {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.globe__pill:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Phone: one scrolling row of pills, the card under the globe. */
+@media (max-width: 639px) {
+  .globe__pills {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+
+  .globe__pills li {
+    flex: none;
+  }
+
+  .globe__card {
+    position: static;
+    max-width: none;
+  }
+
+  .globe__pill {
+    min-height: 40px;
+  }
+}
+
+/* ==========================================================================
+   End of the story — « l'ouvrage est en service » (js/finale-3d.js)
+   The hero's steel frame, finished, floats on the closing band beside the
+   copy, lit by the time in Bamako. Without 3D the band is unchanged.
+   ========================================================================== */
+
+.cta-band--live .cta-band__actions {
+  margin-top: var(--space-5);
+}
+
+@media (min-width: 900px) {
+  .cta-band--live .cta-band__inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, auto);
+  }
+}
+
+.cta-band__site[hidden] {
+  display: none;
+}
+
+.cta-band__site {
+  position: relative;
+  width: clamp(260px, 34vw, 460px);
+  aspect-ratio: 4 / 3;
+  justify-self: center;
+}
+
+@media (max-width: 899px) {
+  .cta-band__site {
+    order: -1;
+    width: min(100%, 360px);
+  }
+}
+
+.cta-band__site-stage {
+  position: absolute;
+  inset: 0;
+}
+
+.cta-band__site-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Annotation, as on the hero's plan: an orange lead, then the state. */
+.cta-band__site-label {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  translate: -50% 0;
+  white-space: nowrap;
+  color: var(--color-text-on-dark-muted);
+  font-family: var(--font-menu);
+  font-size: 0.6875rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.cta-band__site-label:empty {
+  display: none;
+}
+
+.cta-band__site-label::before {
+  content: "";
+  width: 28px;
+  height: 2px;
+  background: var(--color-accent);
+}
+
+.cta-band__site[data-time="nuit"] .cta-band__site-label {
+  color: var(--color-white);
+}

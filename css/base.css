@@ -1,0 +1,57 @@
+/* Base element styles: typography defaults, body, headings, links, focus. */
+
+/* SciFly — licensed freeware (Flyerzone), see assets/fonts/scifly/LICENSE.txt */
+@font-face {
+  font-family: "SciFly";
+  src: url("../assets/fonts/scifly/SciFly-Sans.woff2") format("woff2"),
+       url("../assets/fonts/scifly/SciFly-Sans.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+html {
+  scroll-padding-top: calc(var(--header-h) + var(--space-4));
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  color: var(--color-text);
+  background: var(--color-white);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  line-height: var(--leading-heading);
+  color: inherit;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  transition: color var(--transition-fast);
+}
+
+::selection {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* On dark surfaces the orange ring alone can be hard to read — add a white halo. */
+.on-dark :focus-visible,
+.section--dark :focus-visible {
+  outline-color: var(--color-white);
+}

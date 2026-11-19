@@ -1,0 +1,183 @@
+/* Centrale 30 MW Zouerate: scope pills, the network map (Mali → Mauritania,
+   js/pages/zouerate.js). The gallery uses the shared project gallery. */
+
+/* Scope pills. */
+.scope {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-5) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.scope li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px 4px 4px;
+  border: 1px solid var(--color-gray-200);
+  border-radius: 999px;
+  color: var(--color-primary);
+  font-family: var(--font-menu);
+  font-size: 0.8125rem;
+}
+
+.scope span {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: var(--color-white);
+  font-size: 0.625rem;
+}
+
+/* ----- Le réseau: Mali → Mauritanie --------------------------------------- */
+
+.where {
+  padding-block: clamp(2.5rem, 5vw, 3.5rem);
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.where__grid {
+  display: grid;
+  gap: var(--space-6);
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .where__grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: var(--space-8);
+  }
+}
+
+.where__title {
+  max-width: 22ch;
+  font-family: var(--font-heading);
+  font-size: var(--text-h3);
+  line-height: var(--leading-heading);
+}
+
+.where__text {
+  max-width: 50ch;
+  margin-top: var(--space-3);
+  color: var(--color-text-on-dark-muted);
+  line-height: 1.6;
+}
+
+.where__card {
+  display: grid;
+  margin: var(--space-5) 0 0;
+  border-top: 1px solid var(--color-border-on-dark);
+}
+
+.where__card > div {
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  gap: var(--space-3);
+  padding-block: var(--space-2);
+  border-bottom: 1px solid var(--color-border-on-dark);
+}
+
+.where__card dt {
+  font-family: var(--font-menu);
+  font-size: 0.75rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-text-on-dark-muted);
+}
+
+.where__card dd {
+  margin: 0;
+}
+
+.where__card a {
+  color: var(--color-white);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgb(255 255 255 / 0.4);
+}
+
+.where__link {
+  margin-top: var(--space-4);
+  color: var(--color-white);
+}
+
+.where__map {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 380px;
+  /* The map fades into the band instead of being cut at the edges. */
+  -webkit-mask-image: radial-gradient(closest-side, #000 62%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 62%, transparent 100%);
+}
+
+.where__route {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+.where__hub {
+  fill: var(--color-accent);
+  stroke: var(--color-white);
+  stroke-width: 5;
+}
+
+.where__node {
+  fill: var(--color-white);
+  stroke: var(--color-accent);
+  stroke-width: 7;
+}
+
+.where__pulse {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 4;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.where__label {
+  fill: var(--color-white);
+  font-family: var(--font-menu);
+  font-size: 22px;
+  letter-spacing: 0.06em;
+  paint-order: stroke;
+  stroke: rgb(0 20 51 / 0.85);
+  stroke-width: 6px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .where__map:not(.is-on) .where__route { stroke-dashoffset: 1; }
+  .js .where__map:not(.is-on) .where__node,
+  .js .where__map:not(.is-on) .where__label { opacity: 0; }
+
+  .where__map.is-on .where__route {
+    transition: stroke-dashoffset 1400ms var(--ease-out) 300ms;
+  }
+
+  .where__node,
+  .where__label {
+    transition: opacity 400ms ease 1500ms;
+  }
+
+  .where__map.is-on .where__pulse {
+    animation: where-pulse 2.6s ease-out 300ms infinite;
+  }
+}
+
+@keyframes where-pulse {
+  from { opacity: 0.8; transform: scale(1); }
+  to { opacity: 0; transform: scale(3); }
+}
+

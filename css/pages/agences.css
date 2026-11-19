@@ -1,0 +1,893 @@
+/* Agences page — the living atlas.
+   The map is the page: a technical-plan stage where the group network
+   (js/presence-map.js + js/network.js) plays, an index of the 9 countries
+   with their live local times, a camera that flies to the chosen country and
+   a floating card with its details (js/pages/agences.js). Below, a compact
+   directory with every detail in plain HTML. */
+
+/* ==========================================================================
+   Atlas
+   ========================================================================== */
+
+.atlas {
+  position: relative;
+  /* clip, not hidden: focusing a country button must never scroll the
+     atlas sideways (hidden boxes can still be scrolled programmatically). */
+  overflow: clip;
+  background: var(--color-gray-50);
+}
+
+/* Blueprint grid behind everything — the map sits on the plan. */
+.atlas__grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgb(0 35 90 / 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(0 35 90 / 0.07) 1px, transparent 1px),
+    linear-gradient(rgb(0 35 90 / 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(0 35 90 / 0.035) 1px, transparent 1px);
+  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+}
+
+.atlas__inner {
+  position: relative;
+  display: grid;
+}
+
+/* ----- Side: title, index, tour ------------------------------------------ */
+
+.atlas__side {
+  display: grid;
+  align-content: start;
+  gap: var(--space-4);
+  padding: clamp(2rem, 5vw, 3.5rem) var(--space-4) var(--space-5);
+}
+
+.atlas .breadcrumb__list a {
+  color: var(--color-text-muted);
+}
+
+.atlas .breadcrumb__list a:hover {
+  color: var(--color-primary);
+}
+
+.atlas .breadcrumb__list li[aria-current="page"] {
+  color: var(--color-primary);
+}
+
+.atlas .breadcrumb__list li:not(:last-child)::after {
+  border-color: var(--color-gray-500);
+}
+
+.atlas .section-eyebrow {
+  margin-bottom: 0;
+}
+
+.atlas__title {
+  font-family: var(--font-heading);
+  font-size: var(--text-h1);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.015em;
+  color: var(--color-primary);
+}
+
+.atlas__trait {
+  display: block;
+  width: 56px;
+  height: 3px;
+  background: var(--color-accent);
+  transform-origin: left;
+}
+
+.atlas__lead {
+  max-width: 38ch;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+/* Country index: compact rows, number · name · live local time. */
+.atlas__index {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.atlas__country {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: rgb(255 255 255 / 0.85);
+  color: var(--color-primary);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-emphasis);
+}
+
+/* The trait marks the selected country. */
+.atlas__country::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--color-accent);
+  transform: scaleY(0);
+  transition: transform 400ms var(--ease-out);
+}
+
+.atlas__country:hover {
+  border-color: var(--color-gray-500);
+  transform: translateX(3px);
+}
+
+.atlas__country[aria-pressed="true"] {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.atlas__country[aria-pressed="true"]::before {
+  transform: none;
+}
+
+.atlas__num {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  color: var(--color-accent-700);
+}
+
+.atlas__country[aria-pressed="true"] .atlas__num {
+  color: var(--color-accent-on-dark);
+}
+
+.atlas__name {
+  font-family: var(--font-heading);
+  font-size: 0.9375rem;
+  line-height: 1.2;
+}
+
+.atlas__time {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  color: var(--color-text-subtle);
+  font-variant-numeric: tabular-nums;
+}
+
+.atlas__country[aria-pressed="true"] .atlas__time {
+  color: rgb(255 255 255 / 0.7);
+}
+
+/* Guided tour */
+.atlas__tour {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  justify-self: start;
+  min-height: 44px;
+  margin-top: var(--space-2);
+  padding: var(--space-2) var(--space-4) var(--space-2) var(--space-2);
+  border: 1px solid var(--color-primary);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-primary);
+  font-family: var(--font-menu);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.atlas__tour:hover,
+.atlas__tour[aria-pressed="true"] {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.atlas__tour-icon {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+/* play ▶ / stop ■ drawn in CSS */
+.atlas__tour-icon::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 55%;
+  border-style: solid;
+  border-width: 6px 0 6px 9px;
+  border-color: transparent transparent transparent var(--color-white);
+  transform: translate(-50%, -50%);
+}
+
+.atlas__tour[aria-pressed="true"] .atlas__tour-icon::after {
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  border: 0;
+  background: var(--color-white);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .atlas__tour[aria-pressed="true"] .atlas__tour-icon {
+    animation: tour-pulse 1.6s ease-out infinite;
+  }
+}
+
+@keyframes tour-pulse {
+  0% { box-shadow: 0 0 0 0 rgb(228 82 4 / 0.55); }
+  100% { box-shadow: 0 0 0 12px rgb(228 82 4 / 0); }
+}
+
+/* ----- Stage: the map ---------------------------------------------------- */
+
+.atlas__stage {
+  position: relative;
+  padding: 0 var(--space-4) var(--space-6);
+}
+
+.agencies__map {
+  --s: 1;
+  --tx: 0;
+  --ty: 0;
+  position: relative;
+  overflow: hidden;
+  width: min(100%, 860px);
+  margin-inline: auto;
+  /* Soft edges: when the camera zooms in, the map melts into the plan
+     instead of being cut by a hard rectangle. */
+  -webkit-mask-image:
+    linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%),
+    linear-gradient(180deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%),
+    linear-gradient(180deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+  mask-composite: intersect;
+}
+
+/* The camera: one continuous flight from country to country. */
+.agencies__map .hotspots-map-container {
+  transform-origin: 0 0;
+  transform: translate(calc(var(--tx) * 1%), calc(var(--ty) * 1%)) scale(var(--s));
+  transition: transform 1200ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* White map background melts into the plan. */
+.agencies__map img {
+  display: block;
+  width: 100%;
+  height: auto;
+  mix-blend-mode: multiply;
+}
+
+/* ----- Floating card ----------------------------------------------------- */
+
+.atlas__panel {
+  position: relative;
+  display: grid;
+  gap: var(--space-2);
+  width: min(100%, 340px);
+  margin: var(--space-4) auto 0;
+  padding: var(--space-5);
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+  box-shadow: var(--shadow-lg);
+}
+
+.atlas__panel[hidden] {
+  display: none;
+}
+
+/* The trait is drawn on top of the card each time the country changes. */
+.atlas__panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--color-accent);
+  transform-origin: left;
+}
+
+.atlas__panel--hub {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.atlas__panel-kicker {
+  font-family: var(--font-menu);
+  font-size: 0.6875rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-accent-700);
+}
+
+.atlas__panel--hub .atlas__panel-kicker {
+  color: var(--color-accent-on-dark);
+}
+
+.atlas__panel-country {
+  font-family: var(--font-heading);
+  font-size: var(--text-h3);
+  line-height: 1.1;
+  color: var(--color-primary);
+}
+
+.atlas__panel--hub .atlas__panel-country {
+  color: var(--color-white);
+}
+
+.atlas__panel-time {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.atlas__panel--hub .atlas__panel-time {
+  color: var(--color-text-on-dark-muted);
+}
+
+/* A small clock whose hand turns: the agency is live, right now. */
+.atlas__clock {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+}
+
+.atlas__clock::after {
+  content: "";
+  position: absolute;
+  bottom: 50%;
+  left: calc(50% - 0.75px);
+  width: 1.5px;
+  height: 5px;
+  background: var(--color-accent);
+  transform-origin: bottom center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .atlas__clock::after {
+    animation: clock-hand 4s steps(12) infinite;
+  }
+}
+
+@keyframes clock-hand {
+  to { transform: rotate(360deg); }
+}
+
+.atlas__panel-lines {
+  display: grid;
+  gap: 2px;
+  margin-top: var(--space-1);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+
+.atlas__panel--hub .atlas__panel-lines {
+  border-top-color: var(--color-border-on-dark);
+}
+
+.atlas__panel-lines span,
+.atlas__panel-lines a {
+  width: fit-content;
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.atlas__panel-lines a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-decoration-color: var(--color-gray-200);
+  text-underline-offset: 3px;
+}
+
+.atlas__panel-lines a:hover {
+  text-decoration-color: var(--color-accent);
+}
+
+.atlas__panel--hub .atlas__panel-lines span { color: var(--color-text-on-dark-muted); }
+.atlas__panel--hub .atlas__panel-lines a { color: var(--color-white); text-decoration-color: rgb(255 255 255 / 0.3); }
+
+.atlas__panel-lines .atlas__panel-doc {
+  margin-top: var(--space-1);
+  color: var(--color-accent-700);
+  font-family: var(--font-menu);
+  font-size: var(--text-sm);
+  text-decoration: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .atlas__panel.is-changing {
+    animation: panel-in 500ms var(--ease-out) both;
+  }
+
+  .atlas__panel.is-changing::before {
+    animation: panel-trait 700ms var(--ease-out) 150ms both;
+  }
+
+  .atlas__panel.is-changing > * {
+    animation: panel-line 450ms var(--ease-out) both;
+  }
+
+  .atlas__panel.is-changing > :nth-child(2) { animation-delay: 80ms; }
+  .atlas__panel.is-changing > :nth-child(3) { animation-delay: 160ms; }
+  .atlas__panel.is-changing > :nth-child(4) { animation-delay: 240ms; }
+
+  /* Entrance of the page: trait, title rises, side content follows. */
+  .atlas__trait {
+    animation: page-hero-trait 800ms var(--ease-out) 200ms both;
+  }
+
+  .atlas__title {
+    animation: hero-title-rise-shared 1000ms var(--ease-out) 350ms both;
+  }
+
+  .atlas__lead,
+  .atlas__index,
+  .atlas__tour {
+    animation: page-hero-fade 700ms var(--ease-out) both;
+  }
+
+  .atlas__lead { animation-delay: 550ms; }
+  .atlas__index { animation-delay: 700ms; }
+  .atlas__tour { animation-delay: 850ms; }
+}
+
+@keyframes panel-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes panel-trait {
+  from { transform: scaleX(0); }
+  to { transform: none; }
+}
+
+@keyframes panel-line {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ----- Desktop: full-height atlas, map to the viewport edge -------------- */
+
+@media (min-width: 1024px) {
+  .atlas__inner {
+    --edge: max(var(--space-6), calc((100vw - var(--container-max)) / 2));
+    grid-template-columns: minmax(320px, 400px) minmax(0, 1fr);
+    min-height: calc(100svh - var(--header-h));
+  }
+
+  .atlas__side {
+    align-content: center;
+    padding: var(--space-7) var(--space-6) var(--space-7) var(--edge);
+  }
+
+  .atlas__index {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .atlas__stage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-6) var(--edge) var(--space-6) 0;
+  }
+
+  .agencies__map {
+    width: min(100%, calc((100svh - var(--header-h) - 3rem) * 1.02));
+  }
+
+  /* The card floats over the map, bottom right. */
+  .atlas__panel {
+    position: absolute;
+    right: var(--edge);
+    bottom: var(--space-7);
+    margin: 0;
+  }
+}
+
+/* ==========================================================================
+   Directory — every detail in plain HTML, scannable like a table
+   ========================================================================== */
+
+.directory__head {
+  margin-bottom: var(--space-5);
+}
+
+.directory__list {
+  border-top: 1px solid var(--color-border);
+}
+
+/* Column titles (desktop only; screen readers get the per-row labels). */
+.directory__header {
+  display: none;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr) minmax(0, 2fr) minmax(0, 3fr);
+  gap: var(--space-5);
+  padding: 0 var(--space-4) var(--space-2);
+  font-family: var(--font-menu);
+  font-size: 0.6875rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+}
+
+.directory__row {
+  position: relative;
+  display: grid;
+  gap: var(--space-2) var(--space-5);
+  padding: var(--space-4) var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+  scroll-margin-top: calc(var(--header-h) + var(--space-5));
+  transition: background-color var(--transition-base);
+}
+
+.directory__row::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: var(--space-3);
+  bottom: var(--space-3);
+  width: 3px;
+  border-radius: 2px;
+  background: var(--color-accent);
+  transform: scaleY(0);
+  transition: transform 400ms var(--ease-out);
+}
+
+.directory__row:hover,
+.directory__row:target {
+  background: var(--color-white);
+}
+
+.directory__row:hover::before,
+.directory__row:target::before {
+  transform: none;
+}
+
+.directory__row:focus {
+  outline: none;
+}
+
+.directory__country {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-heading);
+  font-size: var(--text-h4);
+  color: var(--color-primary);
+}
+
+.directory__badge {
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--color-accent-700);
+  color: var(--color-white);
+  font-family: var(--font-menu);
+  font-size: 0.625rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.directory__cell {
+  display: grid;
+  gap: 2px;
+  align-content: start;
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.directory__label {
+  font-family: var(--font-menu);
+  font-size: 0.6875rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+}
+
+.directory__cell a {
+  width: fit-content;
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-decoration-color: var(--color-gray-200);
+  text-underline-offset: 3px;
+}
+
+.directory__cell a:hover {
+  text-decoration-color: var(--color-accent);
+}
+
+.directory__cell .directory__doc {
+  color: var(--color-accent-700);
+  font-family: var(--font-menu);
+  font-size: var(--text-sm);
+  text-decoration: none;
+}
+
+.directory__muted {
+  color: var(--color-text-subtle);
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .directory__row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .directory__country {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Desktop: one line per agency, labels only once in the header row feel. */
+@media (min-width: 1024px) {
+  .directory__row {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr) minmax(0, 2fr) minmax(0, 3fr);
+    align-items: center;
+    padding-inline: var(--space-4);
+  }
+
+  .directory__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .directory__header {
+    display: grid;
+  }
+}
+
+/* ==========================================================================
+   Fit: the whole atlas — map AND floating card — is visible without
+   scrolling, at every size. The atlas is exactly one screen tall; the map
+   takes whatever height is left.
+   ========================================================================== */
+
+.atlas__inner {
+  height: calc(100svh - var(--header-h));
+  min-height: 560px;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.atlas__side,
+.atlas__stage {
+  min-width: 0;
+}
+
+.atlas__stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  padding: 0 var(--space-4) var(--space-3);
+}
+
+/* The map frame keeps the image's exact proportions (hotspots are placed in
+   % of it) and is as large as the stage allows, in width or in height. */
+.atlas__stage {
+  container-type: size;
+}
+
+.agencies__map {
+  width: min(100cqw - 2 * var(--space-4), (100cqh - var(--space-3)) * 1536 / 1499);
+  height: auto;
+  max-width: none;
+  aspect-ratio: 1536 / 1499;
+}
+
+.agencies__map img {
+  width: 100%;
+  height: auto;
+}
+
+/* Card floats over the map, compact, always inside the screen. */
+.atlas__panel {
+  position: absolute;
+  right: var(--space-4);
+  bottom: var(--space-3);
+  left: var(--space-4);
+  width: auto;
+  max-width: 360px;
+  margin: 0 0 0 auto;
+  padding: var(--space-3) var(--space-4);
+  gap: 2px;
+}
+
+.atlas__panel-country {
+  font-size: var(--text-h4);
+}
+
+.atlas__panel-lines {
+  margin-top: var(--space-1);
+  padding-top: var(--space-2);
+}
+
+.atlas__panel-lines span,
+.atlas__panel-lines a {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* ----- Mobile / tablet: compact head, index as a swipeable row ----------- */
+
+@media (max-width: 1023px) {
+  .atlas__side {
+    gap: var(--space-2);
+    padding: var(--space-4) 0 var(--space-3);
+  }
+
+  .atlas__side > :not(.atlas__index):not(.atlas__tour) {
+    margin-inline: var(--space-4);
+  }
+
+  .atlas .breadcrumb,
+  .atlas .section-eyebrow {
+    display: none;
+  }
+
+  .atlas__title {
+    font-size: var(--text-h2);
+  }
+
+  .atlas__trait {
+    display: none;
+  }
+
+  .atlas__lead {
+    font-size: var(--text-sm);
+  }
+
+  .atlas__index {
+    display: flex;
+    gap: var(--space-2);
+    margin-top: var(--space-1);
+    padding: 2px var(--space-4) var(--space-1);
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+
+  .atlas__index::-webkit-scrollbar {
+    display: none;
+  }
+
+  .atlas__index li {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+
+  .atlas__country {
+    width: auto;
+    gap: var(--space-2);
+    padding-inline: var(--space-3);
+    white-space: nowrap;
+  }
+
+  .atlas__country:hover {
+    transform: none;
+  }
+
+  .atlas__tour {
+    margin: 0 var(--space-4);
+    min-height: 40px;
+    padding-block: var(--space-1);
+  }
+}
+
+/* Small screens: the card sits under the map (never on top of Mali); the
+   map takes the height that is left. */
+@media (max-width: 1023px) {
+  .atlas__stage {
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: var(--space-3);
+  }
+
+  .agencies__map {
+    width: min(100cqw - 2 * var(--space-4), (100cqh - var(--panel-h, 160px)) * 1536 / 1499);
+    flex-shrink: 0;
+  }
+
+  .atlas__panel {
+    position: static;
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .atlas__stage {
+    --panel-h: 180px;
+  }
+}
+
+@media (max-width: 479px) {
+  .atlas__panel {
+    padding: var(--space-3);
+  }
+
+  .atlas__panel-time {
+    display: none;
+  }
+}
+
+/* ----- Desktop: side column, index in two columns ------------------------ */
+
+@media (min-width: 1024px) {
+  .atlas__inner {
+    grid-template-columns: minmax(320px, 400px) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+  }
+
+  .atlas__side {
+    gap: var(--space-3);
+    padding-block: var(--space-5);
+  }
+
+  .atlas__index {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+
+  .atlas__country {
+    min-height: 40px;
+    padding: var(--space-2);
+    gap: var(--space-2);
+  }
+
+  .atlas__name {
+    font-size: 0.875rem;
+  }
+
+  .atlas__stage {
+    padding: var(--space-5) var(--edge) var(--space-5) 0;
+  }
+
+  .agencies__map {
+    width: min(100cqw - var(--edge), (100cqh - 2 * var(--space-5)) * 1536 / 1499);
+  }
+
+  .atlas__panel {
+    left: auto;
+    right: var(--edge);
+    bottom: var(--space-5);
+    width: 320px;
+  }
+}
+
+/* Short desktop screens (≤ 760px tall): drop the lead to keep the index in. */
+@media (min-width: 1024px) and (max-height: 760px) {
+  .atlas__lead,
+  .atlas .breadcrumb {
+    display: none;
+  }
+}

@@ -1,0 +1,68 @@
+# Publishes the site on GitHub Pages (https://groupeatc.github.io/) on every
+# push to main. Only the site itself is published: working documents (*.md,
+# notes), tools, the original photos (assets/FichiersPourNewPlaquette) and the
+# font archive stay in the repository only.
+#
+# PREVIEW = "true": this copy is a preview of groupeatc.com, so search engines
+# are kept out (noindex on every page, robots.txt disallow) to avoid competing
+# with the real site. Set it to "false" the day this becomes the live site.
+
+name: Déploiement GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+env:
+  PREVIEW: "true"
+
+jobs:
+  build:
+    # Only the Pages repository publishes (the same code also lives elsewhere).
+    if: github.repository == 'groupeatc/groupeatc.github.io'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Assembler le site
+        run: |
+          rsync -a ./ _site/ \
+            --include='robots.txt' \
+            --exclude='.git*' --exclude='.github/' --exclude='_site/' \
+            --exclude='*.md' --exclude='*.txt' --exclude='skills-lock.json' \
+            --exclude='tools/' --exclude='font/' \
+            --exclude='assets/FichiersPourNewPlaquette/' \
+            --exclude='.DS_Store'
+          touch _site/.nojekyll
+          du -sh _site
+
+      - name: Prévisualisation — pas d'indexation
+        if: env.PREVIEW == 'true'
+        run: |
+          find _site -name '*.html' -exec sed -i 's#<head>#<head>\n  <meta name="robots" content="noindex, nofollow">#' {} +
+          printf 'User-agent: *\nDisallow: /\n' > _site/robots.txt
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,77 @@
+/* Structural layout: container, sections, header scaffolding. */
+
+.container {
+  width: min(100% - 2rem, var(--container-max));
+  margin-inline: auto;
+}
+
+.container--narrow {
+  width: min(100% - 2rem, var(--container-narrow));
+}
+
+@media (min-width: 768px) {
+  .container {
+    width: min(100% - 4rem, var(--container-max));
+  }
+
+  .container--narrow {
+    width: min(100% - 4rem, var(--container-narrow));
+  }
+}
+
+/* ===== Sections ===== */
+
+.section {
+  padding-block: var(--section-pad);
+}
+
+.section--muted {
+  background: var(--color-gray-50);
+}
+
+.section--dark {
+  background: var(--color-primary);
+  color: var(--color-text-on-dark);
+}
+
+.section--center {
+  text-align: center;
+}
+
+/* ===== Header ===== */
+
+.site-header {
+  --bar-h: 0px;
+  position: sticky;
+  /* The information bar (desktop) scrolls away; the main row stays. */
+  top: calc(var(--bar-h) * -1);
+  z-index: var(--z-header);
+  background: var(--color-white);
+  border-bottom: 1px solid var(--color-gray-200);
+  transition: box-shadow var(--transition-base), border-color var(--transition-base);
+}
+
+.site-header.is-scrolled {
+  border-bottom-color: transparent;
+  box-shadow: var(--shadow-header);
+}
+
+@media (min-width: 1200px) {
+  .site-header {
+    --bar-h: 36px;
+  }
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  height: var(--header-h);
+}
+
+/* ===== Main ===== */
+
+main {
+  display: block;
+}

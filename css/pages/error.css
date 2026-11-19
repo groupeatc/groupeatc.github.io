@@ -1,0 +1,146 @@
+/* 404 — "Ce tronçon n'existe pas": the orange trait runs along the truss and
+   stops at the gap; a tower crane holds the 404 sign that should fill it. */
+
+.error-page {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(3rem, 8vw, 6rem);
+}
+
+.error-page__inner {
+  display: grid;
+  gap: var(--space-7);
+  align-items: center;
+}
+
+.error-page__title {
+  font-family: var(--font-heading);
+  font-size: var(--text-h1);
+  line-height: var(--leading-tight);
+  color: var(--color-primary);
+}
+
+.error-page__trait {
+  display: block;
+  width: 56px;
+  height: 3px;
+  margin-block: var(--space-4);
+  background: var(--color-accent);
+  transform-origin: left;
+}
+
+.error-page__text {
+  max-width: 48ch;
+  color: var(--color-text-muted);
+  font-size: var(--text-lead);
+  line-height: 1.6;
+}
+
+.error-page__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.error-page__links {
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border);
+}
+
+.error-page__links-title {
+  margin-bottom: var(--space-3);
+  font-family: var(--font-menu);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.error-page__links ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+}
+
+/* ----- Scene -------------------------------------------------------------- */
+
+.error-scene {
+  width: 100%;
+  height: auto;
+  color: rgb(255 255 255 / 0.06);
+}
+
+.err-plan { fill: var(--color-primary); }
+
+.err-line {
+  fill: none;
+  stroke: rgb(255 255 255 / 0.85);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+.err-ground { stroke: rgb(255 255 255 / 0.35); stroke-width: 2; }
+
+.err-gap {
+  stroke: rgb(255 255 255 / 0.4);
+  stroke-width: 2;
+  stroke-dasharray: 6 6;
+}
+
+.err-trait {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+.err-stop { fill: var(--color-accent); }
+
+.err-cable { stroke: rgb(255 255 255 / 0.7); stroke-width: 1.6; }
+.err-hook { fill: var(--color-white); }
+.err-sign { fill: var(--color-accent); }
+.err-stripes { stroke: var(--color-white); stroke-width: 3; stroke-dasharray: 10 8; }
+
+.err-code {
+  fill: var(--color-white);
+  font-family: var(--font-heading);
+  font-size: 30px;
+  letter-spacing: 0.08em;
+  text-anchor: middle;
+}
+
+.err-swing {
+  transform-origin: 260px 62px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .error-page__trait { animation: err-trait-in 800ms var(--ease-out) 200ms both; }
+  .err-line { animation: err-draw 1400ms var(--ease-out) 200ms both; }
+  .err-trait { animation: err-draw 1100ms cubic-bezier(0.45, 0, 0.25, 1) 1200ms both; }
+  .err-stop { animation: err-pulse 1.6s ease-out 2300ms infinite; transform-box: fill-box; transform-origin: center; }
+  .err-swing { animation: err-in 700ms var(--ease-out) 900ms both, err-sway 3.4s ease-in-out 1600ms infinite alternate; }
+}
+
+@keyframes err-trait-in { from { transform: scaleX(0); } to { transform: none; } }
+@keyframes err-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes err-pulse {
+  0% { transform: scale(1); opacity: 1; }
+  60% { transform: scale(1.8); opacity: 0.25; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes err-in { from { opacity: 0; transform: translateY(-40px); } to { opacity: 1; transform: none; } }
+@keyframes err-sway { from { rotate: -4deg; } to { rotate: 4deg; } }
+
+@media (min-width: 1024px) {
+  .error-page__inner {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: var(--space-9);
+  }
+}

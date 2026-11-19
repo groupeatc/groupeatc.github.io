@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#00235A">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Étude de projet | Groupe ATC</title>
+  <meta name="description" content="Étude de projet : bureau d'études et de conseil en ingénierie de Groupe ATC — projets miniers, industriels et pétroliers, de la faisabilité à la mise en service.">
+  <link rel="canonical" href="https://groupeatc.com/etude-de-projet/">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/utilities.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/pages/projets.css">
+  <link rel="stylesheet" href="/css/pages/activites.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu principal</a>
+
+  <header class="site-header" data-header>
+    <!-- Information bar (desktop): scrolls away, the main row stays sticky. -->
+    <div class="site-header__bar">
+      <div class="container site-header__bar-inner">
+        <p class="site-header__certif"><span class="site-header__dot" aria-hidden="true"></span>Certifié ISO 9001 · ISO 45001 · ISO 14001</p>
+        <ul class="site-header__infos" role="list">
+          <li><a href="tel:+22392101010"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>+223 92 10 10 10</a></li>
+          <li><a href="mailto:mali@groupeatc.com"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>mali@groupeatc.com</a></li>
+          <li><a href="/nos-agences/"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>9 pays d'implantation</a></li>
+        </ul>
+        <ul class="site-header__social" role="list" aria-label="Réseaux sociaux"><li><a href="https://www.facebook.com/ATCconstructionsmetalliques/" target="_blank" rel="noopener" aria-label="Facebook (nouvel onglet)"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H7v3h3v6h3v-6h3l1-3h-4v-2c0-.6.4-1 1-1z"/></svg></a></li><li><a href="https://twitter.com/GroupeATC" target="_blank" rel="noopener" aria-label="Twitter / X (nouvel onglet)"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M4 4l7.5 8.5L4.5 20H7l6-6.8L18 20h2l-7.8-9L19.5 4H17l-5.5 6.2L7 4H4z"/></svg></a></li><li><a href="https://www.instagram.com/GroupeATC/" target="_blank" rel="noopener" aria-label="Instagram (nouvel onglet)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r="0.8" fill="currentColor" stroke="none"/></svg></a></li><li><a href="https://www.linkedin.com/in/groupe-atc-393a2b131/" target="_blank" rel="noopener" aria-label="LinkedIn (nouvel onglet)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7.5 10v7M7.5 7.2v.1M11 10v7m0-4c0-1.7 1.2-3 3-3s2.8 1.3 2.8 3v4" stroke-linecap="round"/></svg></a></li></ul>
+      </div>
+    </div>
+
+    <div class="container site-header__inner">
+      <a href="/" class="site-header__logo" aria-label="Groupe ATC — Accueil">
+        <img src="/assets/logos/groupe-atc-logo-web.svg" alt="Groupe ATC" width="1241" height="418" class="site-header__logo-img">
+      </a>
+
+      <button type="button" class="site-header__toggle js-menu-toggle" aria-expanded="false" aria-controls="primary-navigation">
+        <span class="sr-only" data-menu-label>Ouvrir le menu</span>
+        <span class="site-header__toggle-text" aria-hidden="true">Menu</span>
+        <span class="site-header__toggle-bars" aria-hidden="true"></span>
+      </button>
+
+      <nav class="site-nav" id="primary-navigation" aria-label="Navigation principale">
+        <ul class="site-nav__list" role="list">
+          <li><a href="/" class="site-nav__link">Accueil</a></li>
+
+          <li class="site-nav__item--dropdown">
+            <button type="button" class="site-nav__link site-nav__dropdown-toggle js-dropdown-toggle" aria-expanded="false" aria-controls="dropdown-activites" aria-current="true">
+              Domaine d'activités
+              <svg class="site-nav__caret" width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <ul class="site-nav__dropdown" id="dropdown-activites" role="list" hidden>
+              <li class="site-nav__item--dropdown site-nav__item--nested">
+                <button type="button" class="site-nav__link site-nav__dropdown-toggle js-dropdown-toggle" aria-expanded="false" aria-controls="dropdown-ingenierie">
+                  Ingénierie
+                  <svg class="site-nav__caret site-nav__caret--right" width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M3.5 2L6.5 5L3.5 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <ul class="site-nav__dropdown site-nav__dropdown--nested" id="dropdown-ingenierie" role="list" hidden>
+                  <li><a href="/etude-de-projet/">Étude de Projet</a></li>
+                </ul>
+              </li>
+              <li><a href="/travaux-miniers/">Travaux Miniers</a></li>
+              <li><a href="/centrale-solaire/">Centrale solaire</a></li>
+
+              <li class="site-nav__item--dropdown site-nav__item--nested">
+                <div class="site-nav__split">
+                  <a href="/construction/" class="site-nav__link">Construction</a>
+                  <button type="button" class="site-nav__dropdown-toggle js-dropdown-toggle" aria-expanded="false" aria-controls="dropdown-construction" aria-label="Afficher les sous-catégories Construction">
+                    <svg class="site-nav__caret site-nav__caret--right" width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M3.5 2L6.5 5L3.5 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </button>
+                </div>
+                <ul class="site-nav__dropdown site-nav__dropdown--nested" id="dropdown-construction" role="list" hidden>
+                  <li><a href="/chaudronerie-depot-petroliers/">Chaudronerie &amp; Dépôt pétroliers</a></li>
+                  <li><a href="/construction-industrielle/">Construction Industrielle</a></li>
+                  <li><a href="/electricite-instrumentation/">Électricité &amp; Instrumentation</a></li>
+                  <li><a href="/genie-civil/">Génie Civil</a></li>
+                  <li><a href="/tuyauterie/">Tuyauterie</a></li>
+                </ul>
+              </li>
+
+              <li><a href="/irrigation-reseaux/">Irrigation réseaux</a></li>
+              <li><a href="/amenagement-de-containers/">Aménagement de Containers</a></li>
+              <li><a href="/logistique-et-fourniture/">Logistique &amp; Fournitures</a></li>
+              <li><a href="/maintenance-industrielle/">Maintenance Industrielle</a></li>
+            </ul>
+          </li>
+
+          <li><a href="/nos-projets/" class="site-nav__link">Nos Projets</a></li>
+
+          <li class="site-nav__item--dropdown">
+            <div class="site-nav__split">
+              <a href="/nos-valeurs/" class="site-nav__link">Nos Valeurs</a>
+              <button type="button" class="site-nav__dropdown-toggle js-dropdown-toggle" aria-expanded="false" aria-controls="dropdown-valeurs" aria-label="Afficher les sous-catégories Nos Valeurs">
+                <svg class="site-nav__caret" width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+            <ul class="site-nav__dropdown" id="dropdown-valeurs" role="list" hidden>
+              <li><a href="/securite/">Sécurité et Environnements</a></li>
+              <li><a href="/valeurs-humaines/">Valeurs humaines</a></li>
+              <li><a href="/qualite/">QSE</a></li>
+            </ul>
+          </li>
+
+          <li><a href="/offres-demploi/" class="site-nav__link">Offres d'emploi</a></li>
+          <li><a href="/contacts/" class="site-nav__link">Contacts</a></li>
+          <li><a href="/nos-agences/" class="site-nav__link">Nos Agences</a></li>
+          <li class="site-nav__cta"><a href="/contacts/" class="btn btn--primary btn--lg">Nous contacter</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero page-hero--photo page-hero--activite">
+      <picture class="page-hero__media"><source media="(max-width: 767px)" srcset="/assets/images/about/equipes-atc-02-960.webp" type="image/webp"><source srcset="/assets/images/about/equipes-atc-02.webp" type="image/webp"><img src="/assets/images/about/equipes-atc-02.jpg" alt="Équipes Groupe ATC rassemblées sur une base opérationnelle" width="2000" height="1333" fetchpriority="high"></picture>
+      <div class="page-hero__overlay" aria-hidden="true"></div>
+      <svg class="emblem" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+  <path class="e-l" pathLength="1" d="M30 170V30h140v140Z"/>
+  <path class="e-l e-l--thin" pathLength="1" d="M30 65h140M30 100h140M30 135h140M65 30v140M100 30v140M135 30v140"/>
+  <path class="e-l" pathLength="1" d="M50 150 150 50M50 150h70M50 150V80"/>
+  <g class="e-a e-a--plot"><path d="M50 160h100" class="e-dim"/><path d="M50 155v10M150 155v10"/><circle cx="150" cy="50" r="5"/></g>
+      </svg>
+      <div class="container page-hero__content">
+        <nav class="breadcrumb" aria-label="Fil d'Ariane"><ol class="breadcrumb__list"><li><a href="/">Accueil</a></li><li>Domaine d'activités</li><li aria-current="page">Étude de projet</li></ol></nav>
+        <p class="section-eyebrow section-eyebrow--light">Ingénierie</p>
+        <h1 class="page-hero__title">Étude de projet</h1>
+        <span class="page-hero__trait" aria-hidden="true"></span>
+        <p class="page-hero__lead">Un bureau d'études et de conseil en ingénierie, de la faisabilité jusqu'à la mise en service.</p>
+      </div>
+    </section>
+
+    <section class="chain" aria-labelledby="chain-heading" style="--reach:0">
+      <div class="container chain__inner">
+        <h2 id="chain-heading" class="chain__title">Dans la chaîne Groupe ATC</h2>
+        <ol class="chain__steps js-reveal" role="list"><li class="chain__step is-on is-reached" style="--i:0"><span class="chain__dot" aria-hidden="true"></span><span class="chain__num">01</span><span class="chain__label">Ingénierie</span><span class="sr-only"> — étape de cette activité</span></li><li class="chain__step" style="--i:1"><span class="chain__dot" aria-hidden="true"></span><span class="chain__num">02</span><span class="chain__label">Fabrication</span></li><li class="chain__step" style="--i:2"><span class="chain__dot" aria-hidden="true"></span><span class="chain__num">03</span><span class="chain__label">Logistique</span></li><li class="chain__step" style="--i:3"><span class="chain__dot" aria-hidden="true"></span><span class="chain__num">04</span><span class="chain__label">Montage</span></li><li class="chain__step" style="--i:4"><span class="chain__dot" aria-hidden="true"></span><span class="chain__num">05</span><span class="chain__label">Mise en service</span></li></ol>
+      </div>
+    </section>
+
+    <section class="overview section" aria-labelledby="overview-heading">
+      <div class="container overview__grid">
+        <div>
+          <p class="section-eyebrow">Notre savoir-faire</p>
+          <h2 id="overview-heading" class="section-title">Ce que nous faisons</h2>
+          <span class="section-accent" aria-hidden="true"></span>
+          <p class="overview__text">Groupe ATC accomplit des études de projets au sein d'un bureau d'études et de conseil en ingénierie.</p>
+          <p class="overview__text">Nous assurons l'étude des projets miniers, industriels et pétroliers, de la faisabilité jusqu'à la mise en service, accompagnés de nos ingénieurs, de nos techniciens expérimentés et de notre personnel qualifié.</p>
+          <figure class="field-shot js-reveal">
+            <!-- Surveying viewfinder: the scope scans the site (sharp lens over a
+                 toned-down photo), then locks onto our technician. Decorative
+                 layers are aria-hidden; the base photo carries the alt. -->
+            <div class="field-shot__frame">
+              <div class="field-shot__base"><picture><source srcset="/assets/images/activites/genie-civil/02-topographie.webp" type="image/webp"><img src="/assets/images/activites/genie-civil/02-topographie.jpg" alt="Technicien Groupe ATC réalisant des relevés topographiques sur le terrain" width="550" height="453" loading="lazy" decoding="async"></picture></div>
+              <div class="field-shot__lens" aria-hidden="true"><picture><source srcset="/assets/images/activites/genie-civil/02-topographie.webp" type="image/webp"><img src="/assets/images/activites/genie-civil/02-topographie.jpg" alt="" width="550" height="453" loading="lazy" decoding="async"></picture></div>
+              <svg class="field-shot__reticle" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+                <g class="field-shot__ticks"><path d="M186.0 100.0L178.0 100.0"/><path d="M184.7 114.9L180.8 114.2"/><path d="M180.8 129.4L177.1 128.0"/><path d="M174.5 143.0L167.5 139.0"/><path d="M165.9 155.3L162.8 152.7"/><path d="M155.3 165.9L152.7 162.8"/><path d="M143.0 174.5L139.0 167.5"/><path d="M129.4 180.8L128.0 177.1"/><path d="M114.9 184.7L114.2 180.8"/><path d="M100.0 186.0L100.0 178.0"/><path d="M85.1 184.7L85.8 180.8"/><path d="M70.6 180.8L72.0 177.1"/><path d="M57.0 174.5L61.0 167.5"/><path d="M44.7 165.9L47.3 162.8"/><path d="M34.1 155.3L37.2 152.7"/><path d="M25.5 143.0L32.5 139.0"/><path d="M19.2 129.4L22.9 128.0"/><path d="M15.3 114.9L19.2 114.2"/><path d="M14.0 100.0L22.0 100.0"/><path d="M15.3 85.1L19.2 85.8"/><path d="M19.2 70.6L22.9 72.0"/><path d="M25.5 57.0L32.5 61.0"/><path d="M34.1 44.7L37.2 47.3"/><path d="M44.7 34.1L47.3 37.2"/><path d="M57.0 25.5L61.0 32.5"/><path d="M70.6 19.2L72.0 22.9"/><path d="M85.1 15.3L85.8 19.2"/><path d="M100.0 14.0L100.0 22.0"/><path d="M114.9 15.3L114.2 19.2"/><path d="M129.4 19.2L128.0 22.9"/><path d="M143.0 25.5L139.0 32.5"/><path d="M155.3 34.1L152.7 37.2"/><path d="M165.9 44.7L162.8 47.3"/><path d="M174.5 57.0L167.5 61.0"/><path d="M180.8 70.6L177.1 72.0"/><path d="M184.7 85.1L180.8 85.8"/></g>
+                <circle class="field-shot__ring" cx="100" cy="100" r="90"/>
+                <circle class="field-shot__lock" cx="100" cy="100" r="97" pathLength="1"/>
+                <path class="field-shot__cross" d="M100 30V82M100 118V170M30 100H82M118 100H170"/>
+                <circle class="field-shot__center" cx="100" cy="100" r="4"/>
+              </svg>
+              <span class="field-shot__corners" aria-hidden="true"></span>
+              <span class="field-shot__hud" aria-hidden="true"><span class="field-shot__rec"></span>Visée</span>
+              <span class="field-shot__status" aria-hidden="true"><span class="field-shot__seek">Recherche du point…</span><span class="field-shot__found">Point relevé</span></span>
+            </div>
+            <figcaption class="scene-caption">
+              <span class="scene-caption__kicker">Sur le terrain</span>
+              <strong class="scene-caption__title">La mise au point</strong>
+              Les études commencent par des relevés précis, au pied de l'ouvrage&nbsp;: nos techniciens mesurent avant que nos ingénieurs ne dessinent.
+            </figcaption>
+          </figure>
+        </div>
+        <div class="overview__caps">
+          <h3 class="overview__caps-title">Nos études</h3>
+          <ol class="capabilities js-reveal" role="list">
+            <li class="capabilities__item"><span class="capabilities__index">01</span><span>Projets miniers</span></li>
+            <li class="capabilities__item"><span class="capabilities__index">02</span><span>Projets industriels</span></li>
+            <li class="capabilities__item"><span class="capabilities__index">03</span><span>Projets pétroliers</span></li>
+            <li class="capabilities__item"><span class="capabilities__index">04</span><span>De la faisabilité à la mise en service</span></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- Du plan au chantier: each study type is drafted on the sheet (left of
+         the handle), the real ATC installation is on the photo (right). After
+         the plotter, the handle glides to reveal reality; the visitor can drag
+         it. Schematic drawings, no figures. js/pages/etude.js -->
+    <section class="drafting section section--muted" aria-labelledby="drafting-heading">
+      <div class="container drafting__grid">
+        <div class="drafting__side">
+          <p class="section-eyebrow">Bureau d'études</p>
+          <h2 id="drafting-heading" class="section-title">Du plan au chantier</h2>
+          <span class="section-accent" aria-hidden="true"></span>
+          <p class="drafting__intro">Chaque installation commence sur la planche de nos ingénieurs, puis devient un ouvrage réel. Faites glisser le curseur&nbsp;: à gauche le plan, à droite le chantier.</p>
+          <ul class="drafting__tabs" role="tablist" aria-label="Types d'études">
+            <li role="presentation"><button type="button" role="tab" id="dt-minier" class="drafting__tab" aria-selected="true" aria-controls="drafting-sheet" tabindex="0" data-sheet="minier">Minier</button></li>
+            <li role="presentation"><button type="button" role="tab" id="dt-industriel" class="drafting__tab" aria-selected="false" aria-controls="drafting-sheet" tabindex="-1" data-sheet="industriel">Industriel</button></li>
+            <li role="presentation"><button type="button" role="tab" id="dt-petrolier" class="drafting__tab" aria-selected="false" aria-controls="drafting-sheet" tabindex="-1" data-sheet="petrolier">Pétrolier</button></li>
+          </ul>
+          <p class="compare__caption is-active" data-caption="minier"><span>Réalisé par Groupe ATC</span> Installations minières — Travaux miniers</p>
+          <p class="compare__caption" data-caption="industriel"><span>Réalisé par Groupe ATC</span> Cimenterie Atlas – DIO — Charpente des silos</p>
+          <p class="compare__caption" data-caption="petrolier"><span>Réalisé par Groupe ATC</span> Centrale thermique 100 MW · Bamako — Réservoirs de carburant</p>
+        </div>
+
+        <figure class="compare" id="drafting-sheet" role="tabpanel" aria-labelledby="dt-minier" data-drafting style="--pos: 50%">
+          <div class="compare__stage">
+            <picture class="compare__photo is-active" data-photo="minier"><source media="(max-width: 767px)" srcset="/assets/images/activites/travaux-miniers/00-usine-nuit-960.webp" type="image/webp"><source srcset="/assets/images/activites/travaux-miniers/00-usine-nuit.webp" type="image/webp"><img src="/assets/images/activites/travaux-miniers/00-usine-nuit.jpg" alt="Installations de traitement d'un site minier éclairées de nuit" width="2000" height="1333" loading="lazy" decoding="async"></picture>
+            <picture class="compare__photo" data-photo="industriel"><source media="(max-width: 767px)" srcset="/assets/images/projets/dio/gallery-05-charpente-silos-960.webp" type="image/webp"><source srcset="/assets/images/projets/dio/gallery-05-charpente-silos.webp" type="image/webp"><img src="/assets/images/projets/dio/gallery-05-charpente-silos.jpg" alt="Charpente métallique des silos de stockage de la cimenterie Atlas à DIO" width="1400" height="1390" loading="lazy" decoding="async"></picture>
+            <picture class="compare__photo" data-photo="petrolier"><source srcset="/assets/images/projets/projet-thermique/gallery-02-reservoirs-carburant.webp" type="image/webp"><img src="/assets/images/projets/projet-thermique/gallery-02-reservoirs-carburant.jpg" alt="Réservoirs de stockage de carburant de la centrale de 100 MW à Bamako" width="1080" height="810" loading="lazy" decoding="async"></picture>
+            <div class="compare__plan" aria-hidden="true">
+              <svg class="drafting__sheet" viewBox="0 0 640 540" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <defs>
+                  <pattern id="d-grid-s" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="currentColor" stroke-width=".5"/></pattern>
+                  <pattern id="d-grid-l" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0H0V80" fill="none" stroke="currentColor" stroke-width="1"/></pattern>
+                </defs>
+                <rect class="drafting__paper" width="640" height="540"/>
+                <rect class="drafting__grid-s" width="640" height="540" fill="url(#d-grid-s)"/>
+                <rect class="drafting__grid-l" width="640" height="540" fill="url(#d-grid-l)"/>
+                <g class="drafting__cartouche">
+                  <rect x="40" y="46" width="220" height="40"/>
+                  <text x="50" y="63" class="drafting__c-title" data-sheet-title>PROJET MINIER — ÉLÉVATION</text>
+                  <text x="50" y="78">GROUPE ATC · BUREAU D'ÉTUDES · <tspan data-sheet-folio>01 / 03</tspan></text>
+                </g>
+          <g class="drafting__drawing is-active" data-drawing="minier" data-title="PROJET MINIER — ÉLÉVATION">
+      <path class="d-l" pathLength="1" d="M70 420H560"/>
+      <path class="d-l" pathLength="1" d="M110 150h120l-30 80h-60Z"/>
+      <path class="d-l" pathLength="1" d="M140 230v190M190 230v190M140 300l50 40M190 300l-50 40"/>
+      <path class="d-l" pathLength="1" d="M170 330 470 190"/>
+      <path class="d-l" pathLength="1" d="M174 342 474 202"/>
+      <circle class="d-l" pathLength="1" cx="478" cy="196" r="14"/>
+      <path class="d-l" pathLength="1" d="M478 210v210M440 420l38-70 38 70"/>
+      <path class="d-l" pathLength="1" d="M480 420q40-60 80 0"/>
+      <g class="d-dim"><path d="M110 128H230M110 122v12M230 122v12"/><text x="170.0" y="120">A</text></g><g class="d-dim"><path d="M92 150V230M86 150h12M86 230h12"/><text x="102" y="194.0" class="d-dim__v">H1</text></g><g class="d-dim"><path d="M530 196V420M524 196h12M524 420h12"/><text x="540" y="312.0" class="d-dim__v">H2</text></g><g class="d-dim"><path d="M140 442l-7 -10h14Z"/><text x="160" y="440">±0.00</text></g>
+      <g class="d-tag"><circle cx="300" cy="262" r="12"/><text x="300" y="266">1</text></g>
+          </g>
+          <g class="drafting__drawing" data-drawing="industriel" data-title="PROJET INDUSTRIEL — ÉLÉVATION">
+      <path class="d-l" pathLength="1" d="M70 420H560"/>
+      <path class="d-l" pathLength="1" d="M90 420V230h220v190"/>
+      <path class="d-l" pathLength="1" d="M90 230l110-60 110 60M90 230h220M110 230l20-11 20 11 20-11 20 11 20-11 20 11 20-11 20 11 20-11 20 11"/>
+      <path class="d-l d-l--thin" pathLength="1" d="M90 300h220M90 360h220M163 230v190M236 230v190"/>
+      <path class="d-l" pathLength="1" d="M380 420V180h70v240M380 180q35-40 70 0"/>
+      <path class="d-l" pathLength="1" d="M470 420V260l25-40 25 40v160"/>
+      <path class="d-l" pathLength="1" d="M415 140v40M310 260h70"/>
+      <g class="d-dim"><path d="M90 150H310M90 144v12M310 144v12"/><text x="200.0" y="142">L</text></g><g class="d-dim"><path d="M560 180V420M554 180h12M554 420h12"/><text x="570" y="304.0" class="d-dim__v">H</text></g><g class="d-dim"><path d="M90 442l-7 -10h14Z"/><text x="110" y="440">±0.00</text></g>
+      <g class="d-tag"><circle cx="415" cy="300" r="12"/><text x="415" y="304">2</text></g>
+          </g>
+          <g class="drafting__drawing" data-drawing="petrolier" data-title="PROJET PÉTROLIER — ÉLÉVATION">
+      <path class="d-l" pathLength="1" d="M70 420H560"/>
+      <path class="d-l" pathLength="1" d="M90 420V250h140v170M90 250q70-30 140 0"/>
+      <path class="d-l d-l--thin" pathLength="1" d="M90 300h140M90 350h140"/>
+      <path class="d-l" pathLength="1" d="M250 420V290h110v130M250 290q55-24 110 0"/>
+      <path class="d-l" pathLength="1" d="M230 380h20M360 380h60v-40h60v80"/>
+      <path class="d-l" pathLength="1" d="M400 300h120v120M400 300v120M400 340h120"/>
+      <circle class="d-l" pathLength="1" cx="480" cy="406" r="14"/>
+      <path class="d-l" pathLength="1" d="M230 250l20-40 4 0M254 210v40"/>
+      <g class="d-dim"><path d="M90 226H230M90 220v12M230 220v12"/><text x="160.0" y="218">Ø1</text></g><g class="d-dim"><path d="M250 266H360M250 260v12M360 260v12"/><text x="305.0" y="258">Ø2</text></g><g class="d-dim"><path d="M66 250V420M60 250h12M60 420h12"/><text x="76" y="339.0" class="d-dim__v">H</text></g><g class="d-dim"><path d="M400 442l-7 -10h14Z"/><text x="420" y="440">±0.00</text></g>
+      <g class="d-tag"><circle cx="160" cy="330" r="12"/><text x="160" y="334">3</text></g>
+          </g>
+              </svg>
+            </div>
+            <span class="compare__handle" aria-hidden="true"><span class="compare__knob"></span></span>
+            <span class="compare__label compare__label--plan" aria-hidden="true">Plan</span>
+            <span class="compare__label compare__label--real" aria-hidden="true">Chantier</span>
+            <input class="compare__range" type="range" min="0" max="100" value="50" aria-label="Comparer le plan et le chantier réel" data-compare-range>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Galerie : la page source n'utilise que des photos de banque d'images ; non reprises (CLAUDE.md §27). TODO: photos du bureau d'études. -->
+    <section class="process-section process-section--alt" aria-labelledby="related-heading">
+      <div class="container">
+        <h2 id="related-heading" class="split-heading__title">
+          <span class="split-heading__title-primary">Projets</span>
+          <span class="split-heading__title-accent">de référence</span>
+        </h2>
+        <span class="split-heading__divider" aria-hidden="true"></span>
+        <div class="related-list">
+          <a class="related-list__item js-reveal" href="/syama/">
+            <span class="related-list__thumb"><img src="/assets/images/projets/syama/vue-drone-usine-card.jpg" alt="" width="200" height="150" loading="lazy"></span>
+            <span class="related-list__body">
+              <span class="related-list__title">Mine d'or</span>
+              <span class="related-list__meta">En cours</span>
+            </span>
+            <span class="related-list__arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="related-list__item js-reveal" href="/dio/">
+            <span class="related-list__thumb"><img src="/assets/images/projets/dio.jpg" alt="" width="200" height="150" loading="lazy"></span>
+            <span class="related-list__body">
+              <span class="related-list__title">Cimenterie Atlas – DIO</span>
+              <span class="related-list__meta">En cours — DIO, Cercle de Kati</span>
+            </span>
+            <span class="related-list__arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="related-list__item js-reveal" href="/projet-kordian/">
+            <span class="related-list__thumb"><img src="/assets/images/projets/kordian.jpg" alt="" width="200" height="150" loading="lazy"></span>
+            <span class="related-list__body">
+              <span class="related-list__title">Fabrication de réservoirs de dépôt pétrolier</span>
+              <span class="related-list__meta">En cours</span>
+            </span>
+            <span class="related-list__arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <a class="next-activity" href="/travaux-miniers/">
+      <picture class="next-activity__media"><source media="(max-width: 767px)" srcset="/assets/images/activites/travaux-miniers/00-usine-nuit-960.webp" type="image/webp"><source srcset="/assets/images/activites/travaux-miniers/00-usine-nuit.webp" type="image/webp"><img src="/assets/images/activites/travaux-miniers/00-usine-nuit.jpg" alt="" width="2000" height="1333" loading="lazy" decoding="async"></picture>
+      <span class="next-activity__veil" aria-hidden="true"></span>
+      <span class="container next-activity__inner">
+        <span class="next-activity__kicker">Activité suivante · Domaine d'activités</span>
+        <span class="next-activity__title">Travaux miniers</span>
+        <span class="next-activity__go" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </span>
+    </a>
+
+    <nav class="activities-nav" aria-labelledby="activities-nav-heading">
+      <div class="container">
+        <h2 id="activities-nav-heading" class="activities-nav__title">Nos domaines d'activités</h2>
+        <ul class="activities-nav__list" role="list"><li><a class="activity-chip" href="/etude-de-projet/" aria-current="page">Étude de projet</a></li><li><a class="activity-chip" href="/travaux-miniers/">Travaux miniers</a></li><li><a class="activity-chip" href="/centrale-solaire/">Centrale solaire</a></li><li><a class="activity-chip" href="/construction/">Construction</a></li><li><a class="activity-chip" href="/chaudronerie-depot-petroliers/">Chaudronnerie</a></li><li><a class="activity-chip" href="/construction-industrielle/">Construction industrielle</a></li><li><a class="activity-chip" href="/electricite-instrumentation/">Électricité & instrumentation</a></li><li><a class="activity-chip" href="/genie-civil/">Génie civil</a></li><li><a class="activity-chip" href="/tuyauterie/">Tuyauterie</a></li><li><a class="activity-chip" href="/irrigation-reseaux/">Irrigation & réseaux</a></li><li><a class="activity-chip" href="/amenagement-de-containers/">Containers</a></li><li><a class="activity-chip" href="/logistique-et-fourniture/">Logistique</a></li><li><a class="activity-chip" href="/maintenance-industrielle/">Maintenance</a></li></ul>
+      </div>
+    </nav>
+    <section class="cta-band" aria-labelledby="cta-heading">
+      <div class="container cta-band__inner">
+        <div>
+          <h2 id="cta-heading" class="cta-band__title">Un projet en tête ?</h2>
+          <p class="cta-band__text">Nos équipes vous accompagnent de l'étude à la mise en service.</p>
+        </div>
+        <div class="cta-band__actions">
+          <a href="/contacts/" class="btn btn--primary btn--lg">Nous contacter</a>
+          <a href="/nos-projets/" class="btn btn--outline-light btn--lg">Nos projets</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__main">
+      <div class="site-footer__brand">
+        <a href="/" aria-label="Groupe ATC — Accueil">
+          <img src="/assets/logos/groupe-atc-logo-web.svg" alt="Groupe ATC" width="1241" height="418" class="site-footer__logo" loading="lazy">
+        </a>
+        <p class="site-footer__tagline">Groupe ATC conçoit, fabrique et installe des infrastructures industrielles, minières et énergétiques à travers l'Afrique.</p>
+        <picture><source srcset="/assets/images/certifications/certifications-iso.webp" type="image/webp"><img src="/assets/images/certifications/certifications-iso.png" alt="Certifications Qualité ISO 9001, Sécurité ISO 45001, Environnement ISO 14001" width="233" height="89" class="site-footer__certification" loading="lazy"></picture>
+      </div>
+
+      <nav aria-labelledby="footer-nav-heading">
+        <h2 id="footer-nav-heading" class="site-footer__heading">Navigation</h2>
+        <ul class="site-footer__links" role="list">
+          <li><a href="/">Accueil</a></li>
+          <li><a href="/nos-projets/">Nos Projets</a></li>
+          <li><a href="/nos-valeurs/">Nos Valeurs</a></li>
+          <li><a href="/offres-demploi/">Offres d'emploi</a></li>
+          <li><a href="/contacts/">Contacts</a></li>
+          <li><a href="/nos-agences/">Nos Agences</a></li>
+        </ul>
+      </nav>
+
+      <div>
+        <h2 class="site-footer__heading">Contact</h2>
+        <address class="site-footer__contact">
+          <strong>Groupe ATC — Mali</strong>
+          <span>Niamana - Route de Ségou, Mali</span>
+          <a href="tel:+22392101010">+223 92 10 10 10</a>
+          <a href="mailto:mali@groupeatc.com">mali@groupeatc.com</a>
+        </address>
+        <ul class="site-footer__social" role="list" aria-label="Réseaux sociaux">
+            <li>
+              <a href="https://www.facebook.com/ATCconstructionsmetalliques/" target="_blank" rel="noopener" aria-label="Facebook (nouvel onglet)"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H7v3h3v6h3v-6h3l1-3h-4v-2c0-.6.4-1 1-1z"/></svg></a>
+            </li>
+            <li>
+              <a href="https://twitter.com/GroupeATC" target="_blank" rel="noopener" aria-label="Twitter / X (nouvel onglet)"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M4 4l7.5 8.5L4.5 20H7l6-6.8L18 20h2l-7.8-9L19.5 4H17l-5.5 6.2L7 4H4z"/></svg></a>
+            </li>
+            <li>
+              <a href="https://www.instagram.com/GroupeATC/" target="_blank" rel="noopener" aria-label="Instagram (nouvel onglet)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r="0.8" fill="currentColor" stroke="none"/></svg></a>
+            </li>
+            <li>
+              <a href="https://www.linkedin.com/in/groupe-atc-393a2b131/" target="_blank" rel="noopener" aria-label="LinkedIn (nouvel onglet)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7.5 10v7M7.5 7.2v.1M11 10v7m0-4c0-1.7 1.2-3 3-3s2.8 1.3 2.8 3v4" stroke-linecap="round"/></svg></a>
+            </li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="site-footer__heading">Nos agences</h2>
+        <!-- The site ends where the home page began: the network of the group,
+             parent company in Mali tied to each subsidiary (js/footer-network.js).
+             Same 1536×1499 map space as the home map; this image is its crop. -->
+        <a href="/nos-agences/" class="site-footer__map-link" aria-label="Voir nos agences dans 9 pays">
+          <svg class="footer-map" viewBox="90 20 720 940" role="img" aria-label="Carte des implantations : société mère au Mali, filiales en Guinée, Burkina Faso, Sénégal, Tunisie, France, Mauritanie, Niger et Côte d'Ivoire" data-footer-network>
+            <image href="/assets/images/about/footer-presence.webp" x="90" y="20" width="720" height="940"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="site-footer__bottom">
+      <div class="container site-footer__bottom-inner">
+        <p>&copy; <span data-year>2026</span> Groupe ATC. Tous droits réservés.</p>
+        <p><a href="/nos-agences/">9 pays d'implantation</a></p>
+      </div>
+    </div>
+    <!-- Plotter trait of the page transition (shown only during it). -->
+    <div class="vt-trait" aria-hidden="true"></div>
+  </footer>
+
+  <button type="button" class="back-to-top js-back-to-top" aria-label="Retour en haut de page">
+    <svg width="16" height="16" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+      <path d="M2 7.5L6 3.5L10 7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <script type="module" src="/js/main.js" defer></script>
+  <script type="module" src="/js/pages/etude.js" defer></script>
+</body>
+</html>
