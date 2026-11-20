@@ -139,6 +139,13 @@ Le détail page par page est dans `MOTION.md`.
   home.css, à supprimer si l'option est définitivement abandonnée). À valider : texte de la
   diapositive 2 (repris des pages Chaudronnerie / Kordian) et nom / lieu du
   chantier de la photo 2 (même site que Kordian ?).
+- **Cartes de visite en ligne** : `/carte-de-visite/cyril-monneret/` et
+  `/carte-de-visite/jean-philippe-kouame/` — page vierge, sans en-tête ni pied
+  de page : uniquement la carte (image tirée des PDF de
+  `assets/carteDeVisite/`), qui s'incline au survol ; téléphone, e-mail et
+  site sont des zones cliquables posées sur la carte (positions en % dans le
+  HTML). Hors menu, hors sitemap, `noindex`, hors `build-partials.py`.
+  vCard et PDF prêts dans `assets/documents/cartes/` (non liés pour l'instant).
 - **Accueil — « Du plan au réel »** (section « De l'étude à la mise en
   service ») : la charpente 3D raconte les 5 étapes, chacune prouvée par une
   vraie photo ATC (`assets/images/process/`). L'illustration SVG d'origine

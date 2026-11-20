@@ -1,0 +1,171 @@
+/* Carte de visite en ligne (carte-de-visite/<nom>/): the card alone, centred
+   on a plain page, no header or footer. Its contact lines are links laid over
+   the image. The card arrives and settles, then tilts under the pointer with
+   a soft light (js/pages/carte.js). */
+
+.vcard-only {
+  margin: 0;
+  min-height: 100svh;
+  background: var(--color-gray-50);
+}
+
+.vcard-only__stage {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--space-5);
+  min-height: 100svh;
+  padding: var(--space-4);
+}
+
+/* Read by screen readers, the card says the rest visually. */
+.vcard-only__title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.vcard-only__card {
+  width: min(100vw - 2 * var(--space-4), 900px);
+  margin: 0;
+  perspective: 1200px;
+}
+
+.vcard-only__inner {
+  position: relative;
+  overflow: hidden;
+  border-radius: clamp(8px, 1.4vw, 14px);
+  background: var(--color-white);
+  box-shadow: 0 30px 60px rgb(0 20 50 / 0.18), 0 6px 14px rgb(0 20 50 / 0.12);
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+}
+
+.vcard-only__inner img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Links over the card's phone / e-mail / web lines. */
+.vcard-only__hit {
+  position: absolute;
+  z-index: 1;
+  border-radius: 4px;
+}
+
+.vcard-only__hit:hover {
+  background: rgb(228 82 4 / 0.08);
+}
+
+.vcard-only__hit:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.vcard-only__sheen {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--sx, 30%) var(--sy, 20%), rgb(255 255 255 / 0.45), transparent 45%);
+  mix-blend-mode: soft-light;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 300ms ease;
+}
+
+.vcard-only__card.is-tilting .vcard-only__sheen {
+  opacity: 1;
+}
+
+/* The one action: download the card (PDF), quiet under it. */
+.vcard-only__download {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-white);
+  color: var(--color-primary);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  text-decoration: none;
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.vcard-only__download:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent-700);
+}
+
+.vcard-only__download[hidden] {
+  display: none;
+}
+
+/* Just clicked: confirmed, then gone. */
+.vcard-only__download.is-done {
+  border-color: var(--color-primary);
+  pointer-events: none;
+}
+
+.vcard-only__download.is-done svg {
+  display: none;
+}
+
+.vcard-only__download.is-done::before {
+  content: "✓";
+  color: var(--color-accent-700);
+  font-weight: 700;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .vcard-only__download.is-done {
+    animation: vcard-out 400ms ease 1400ms forwards;
+  }
+}
+
+@keyframes vcard-out {
+  to { opacity: 0; transform: translateY(6px); }
+}
+
+.vcard-only__download:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .vcard-only__download {
+    animation: vcard-fade 500ms ease 900ms both;
+  }
+
+  .vcard-only__inner {
+    transition: transform 500ms var(--ease-out);
+  }
+
+  .vcard-only__card.is-tilting .vcard-only__inner {
+    transition-duration: 120ms;
+  }
+
+  .vcard-only__card {
+    animation: vcard-in 1000ms var(--ease-out) 80ms both;
+  }
+}
+
+@keyframes vcard-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes vcard-in {
+  from {
+    opacity: 0;
+    transform: translateY(30px) rotate(-4deg) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
